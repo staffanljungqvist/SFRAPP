@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "216257986897",
+    "project_id": "sfr-app",
+    "storage_bucket": "sfr-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:216257986897:android:4dab75b02eb855aa945370",
+        "android_client_info": {
+          "package_name": "com.levento.sfr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "216257986897-2104s9ojdkhkgcru13dgni4e5nrdumc4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdIvZMLDphOgQ8cJy7gYZC5-i_A1_5aWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "216257986897-2104s9ojdkhkgcru13dgni4e5nrdumc4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "216257986897-ocj6hs1rgcla908jvkf204jnppln41ds.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.levento.sfr"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:216257986897:android:2228263f4209d165945370",
+        "android_client_info": {
+          "package_name": "com.levento.sfrapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "216257986897-2104s9ojdkhkgcru13dgni4e5nrdumc4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdIvZMLDphOgQ8cJy7gYZC5-i_A1_5aWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "216257986897-2104s9ojdkhkgcru13dgni4e5nrdumc4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "216257986897-ocj6hs1rgcla908jvkf204jnppln41ds.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.levento.sfr"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
