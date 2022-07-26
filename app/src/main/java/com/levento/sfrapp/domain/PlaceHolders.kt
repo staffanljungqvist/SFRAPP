@@ -5,6 +5,19 @@ import com.levento.sfrapp.R
 object PlaceHolders {
     val categoryImage = R.drawable.fordon_kategori
     val newsArticleImage = R.drawable.mala1
+
+    val userCompany = UserCompany(
+        memberId = "123456789",
+        companyName = "LV Creative Consultants AB",
+        orgNr = "12345",
+        locality = "Helsingborg",
+        address = "HETCH AB, Redaregatan 48",
+        phone = "0708 1234567",
+        contact = "Kalle Johansson",
+        validThru = "2023-03-12"
+    )
+
+
     val newsList = listOf<Article>(
         Article(
             id = "1",

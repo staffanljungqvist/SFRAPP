@@ -19,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.levento.sfrapp.domain.Article
 import com.levento.sfrapp.domain.Benefit
+import com.levento.sfrapp.domain.PlaceHolders
 import com.levento.sfrapp.navigation.BottomNavigationBar
 import com.levento.sfrapp.navigation.NavRoutes
 import com.levento.sfrapp.screens.*
@@ -100,7 +101,7 @@ fun NavigationHost(
         }
 
         composable(NavRoutes.Profile.route) {
-            ProfileScreen()
+            ProfileScreen(PlaceHolders.userCompany)
         }
         composable(NavRoutes.Info.route) {
             InfoScreen()
