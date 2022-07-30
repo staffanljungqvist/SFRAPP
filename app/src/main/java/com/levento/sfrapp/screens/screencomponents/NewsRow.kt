@@ -3,8 +3,10 @@ package com.levento.sfrapp.screens.screencomponents
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
@@ -26,14 +28,22 @@ import com.levento.sfrapp.repository.placeHolderNews
 import com.levento.sfrapp.ui.theme.SFRAPPTheme
 import com.levento.sfrapp.ui.theme.gray800
 import com.levento.sfrapp.ui.theme.red
+import dev.chrisbanes.snapper.ExperimentalSnapperApi
+import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 
 
 //Todo byt ut articles till lista med Artikelobjet
+@OptIn(ExperimentalSnapperApi::class)
 @Composable
 fun NewsRow(articles: List<Article>, onArticleClick: (Article) -> Unit) {
+
+    val lazyListState: LazyListState = rememberLazyListState()
+
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(32.dp),
         contentPadding = PaddingValues(horizontal = 16.dp),
+        state = lazyListState,
+        flingBehavior = rememberSnapperFlingBehavior(lazyListState)
     ) {
         items(articles) { article ->
             NewsCard(article = article, onArticleClick = onArticleClick)

@@ -3,8 +3,10 @@ package com.levento.sfrapp.screens.screencomponents
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
@@ -27,20 +29,29 @@ import com.levento.sfrapp.domain.Benefit
 import com.levento.sfrapp.domain.PlaceHolders
 import com.levento.sfrapp.ui.theme.SFRAPPTheme
 import com.levento.sfrapp.ui.theme.brown
+import dev.chrisbanes.snapper.ExperimentalSnapperApi
+import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 
 
+@OptIn(ExperimentalSnapperApi::class)
 @Composable
 fun BenefitRow(
     benefits: List<Benefit>,
     categoryImage: String? = null,
     onBenefitClick: (Benefit) -> Unit
 ) {
+
+    val lazyListState: LazyListState = rememberLazyListState()
+
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(32.dp),
-        contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
+        contentPadding = PaddingValues(start = 16.dp, end = 70.dp),
+        state = lazyListState,
+        flingBehavior = rememberSnapperFlingBehavior(lazyListState),
+
     ) {
         items(benefits) { benefit ->
-            BenefitCard(benefit = benefit, onClick = onBenefitClick)
+            BenefitCard(benefit = benefit, onClick = onBenefitClick, categoryImage = categoryImage)
         }
     }
 }

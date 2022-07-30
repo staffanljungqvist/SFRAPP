@@ -99,4 +99,10 @@ dependencies {
     implementation "androidx.room:room-ktx:2.4.2"
     annotationProcessor "androidx.room:room-compiler:2.4.2"
     kapt "androidx.room:room-compiler:2.4.2"
+
+    //Used to change statusbar color
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"
+
+    //Snapping content in rows and columns to the center of screen
+    implementation "dev.chrisbanes.snapper:snapper:0.2.0"
 }

@@ -4,21 +4,16 @@ import MainViewModel
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.levento.sfrapp.domain.Article
-import com.levento.sfrapp.domain.Benefit
 import com.levento.sfrapp.domain.PlaceHolders
 import com.levento.sfrapp.navigation.BottomNavigationBar
 import com.levento.sfrapp.navigation.NavRoutes
@@ -50,16 +45,13 @@ class MainActivity : ComponentActivity() {
 fun MainScreen(viewModel: MainViewModel = viewModel()) {
 
     val navController = rememberNavController()
+    val currentArticle by remember { mutableStateOf(viewModel.currentArticle) }
 
     Scaffold(
-        topBar = {
-            TopAppBar(title = {
-                Text(navController.currentBackStackEntry?.id ?: "N/A")
-            })
-        },
         content = {
             NavigationHost(
                 navController = navController,
+                viewModel = viewModel
             )
         },
         bottomBar = {
@@ -71,29 +63,35 @@ fun MainScreen(viewModel: MainViewModel = viewModel()) {
 @Composable
 fun NavigationHost(
     navController: NavHostController,
+    viewModel: MainViewModel
 ) {
 
     NavHost(navController = navController, startDestination = NavRoutes.Home.route) {
         composable(NavRoutes.Home.route) {
-            HomeScreen(navController = navController)
+            HomeScreen(navController = navController, viewModel = viewModel)
         }
 
-        composable(NavRoutes.ArticleDetailScreen.route + "/{articleTitle}") { backStackEntry ->
-            val articleId = backStackEntry.arguments?.getString("articleTitle")
+        composable(NavRoutes.ArticleDetailScreen.route) { backStackEntry ->
+            ArticleDetailScreen(viewModel)
+
+/*            val articleId = backStackEntry.arguments?.getString("articleTitle")
             articleId?.let { title ->
                 ArticleDetailScreen(title)
-            }
+            }*/
         }
 
-        composable(NavRoutes.BenefitDetailScreen.route + "/{benefitId}") { backStackEntry ->
-            val benefitId = backStackEntry.arguments?.getString("benefitId")
+        composable(NavRoutes.BenefitDetailScreen.route) { backStackEntry ->
+
+            BenefitDetailScreen(viewModel)
+
+/*            val benefitId = backStackEntry.arguments?.getString("benefitId")
             benefitId?.let { id ->
                 BenefitDetailScreen(id)
-            }
+            }*/
         }
 
         composable(NavRoutes.Benefits.route) {
-            BenefitsScreen(navController = navController)
+            BenefitsScreen(navController = navController, viewModel = viewModel)
         }
 
         composable(NavRoutes.Card.route) {

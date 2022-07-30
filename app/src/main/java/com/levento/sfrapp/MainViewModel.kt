@@ -18,6 +18,8 @@ class MainViewModel @Inject constructor(
 
   //  private val newsRepository: NewsRepository = NewsRepository()
     private val benefitsRepository: BenefitsRepository = BenefitsRepository()
+    private val newsRepository = NewsRepository()
+
     private var allBenefits = listOf<Benefit>()
 
     var loading = mutableStateOf(false)
@@ -28,21 +30,27 @@ class MainViewModel @Inject constructor(
     private val _articles = mutableStateOf(listOf<Article>())
     val articles = _articles
 
+    private val _currentArticle = mutableStateOf(Article())
+    val currentArticle = _currentArticle
+
     private val _exclusiveBenefits = mutableStateOf(listOf<Benefit>())
     val exclusiveBenefits = _exclusiveBenefits
 
     private val _populatedCategories = mutableStateOf(listOf<BenefitCategory>())
     val populatedCategories = _populatedCategories
 
+    private val _currentBenefit = mutableStateOf(Benefit())
+    val currentBenefit = _currentBenefit
+
 
     //Funktioner som körs när appen startar.
     init {
-   //     getNews()
+        getNews()
         getBenefits()
     }
 
     //Hämtar och publicerar en lista med Article
-/*
+
     fun getNews() {
         viewModelScope.launch {
             val result = newsRepository.getNews()
@@ -51,7 +59,6 @@ class MainViewModel @Inject constructor(
             _articles.value = result
         }
     }
-*/
 
     /*
     Hämtar en lista med alla Benefits från repository. Hämtar sedan en lista med alla Category.
@@ -120,6 +127,14 @@ class MainViewModel @Inject constructor(
             }
         }
         return cateryListPopulated
+    }
+
+    fun setCurrentArticle(article: Article) {
+        _currentArticle.value = article
+    }
+
+    fun setCurrentBenefit(benefit: Benefit) {
+        _currentBenefit.value = benefit
     }
 
     fun retrieveBenefit(benefitId: String): Benefit? {

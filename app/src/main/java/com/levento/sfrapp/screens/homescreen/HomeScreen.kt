@@ -1,5 +1,6 @@
 package com.levento.sfrapp.screens
 
+import MainViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
@@ -9,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.levento.sfrapp.domain.Article
 import com.levento.sfrapp.domain.Benefit
@@ -24,21 +26,32 @@ import com.levento.sfrapp.ui.theme.backgroundColor
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = viewModel(),
+    viewModel: MainViewModel,
     navController: NavHostController,
 ) {
 
-    val newsArticles by remember { viewModel.newsArticles }
-    val exclusiveBenefits = remember { viewModel.exclusiveBenefits }
+    val newsArticles by remember { viewModel.articles }
+    val exclusiveBenefits by remember { viewModel.exclusiveBenefits }
 
     val onBenefitClick: (Benefit) -> Unit = { benefit ->
-        navController.navigate(NavRoutes.BenefitDetailScreen.route + "/${benefit.id}") {
+
+        viewModel.setCurrentBenefit(benefit)
+        navController.navigate(NavRoutes.Benefits.route) {
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+
+        navController.navigate(NavRoutes.BenefitDetailScreen.route) {
             launchSingleTop
         }
     }
 
     val onArticleClick: (Article) -> Unit = { article ->
-        navController.navigate(NavRoutes.ArticleDetailScreen.route + "/${article.title}") {
+        viewModel.setCurrentArticle(article)
+        navController.navigate(NavRoutes.ArticleDetailScreen.route) {
             launchSingleTop
         }
     }
@@ -78,6 +91,7 @@ fun HomeScreenPreview() {
                 NewsRow(PlaceHolders.newsList, onArticleClick = {})
             }
             ContentList(header = "Aktuella förmåner") {
+                BenefitRow(benefits = PlaceHolders.benefits, onBenefitClick = {})
             }
         }
     }

@@ -15,15 +15,14 @@ import com.levento.sfrapp.screens.articledetail.ArticleDetailViewModel
 
 @Composable
 fun ArticleDetailScreen(
-    articleTitle: String,
-    viewModel: ArticleDetailViewModel = viewModel()
+    viewModel: MainViewModel
 ) {
 
-    val article by remember { viewModel.article }
+    val article by remember { viewModel.currentArticle }
 
-    LaunchedEffect(key1 = articleTitle) {
+/*    LaunchedEffect(key1 = articleTitle) {
         viewModel.getArticle(articleTitle)
-    }
+    }*/
 
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text(text = article.title ?: "Missing article")

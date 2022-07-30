@@ -51,11 +51,11 @@ fun BottomNavigationBar(navController: NavController) {
                     selected = currentRoute == navItem.route,
                     onClick = {
                         navController.navigate(navItem.route) {
+
                             popUpTo(navController.graph.findStartDestination().id) {
                                 saveState = true
                             }
                             launchSingleTop = true
-                            restoreState = true
                         }
                     },
                     icon = {
