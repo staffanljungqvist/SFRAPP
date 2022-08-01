@@ -8,12 +8,10 @@ import com.levento.sfrapp.models.Benefit
 import com.levento.sfrapp.models.BenefitCategory
 import com.levento.sfrapp.models.DataOrException
 import kotlinx.coroutines.tasks.await
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class BenefitsRepository @Inject constructor(
-) {
+
+class BenefitsRepository {
+
     suspend fun getAllBenefitsFromFirestore(): DataOrException<List<Benefit>, Exception> {
         val dataOrException = DataOrException<List<Benefit>, Exception>()
         Log.d(TAG, "Försöker hämta förmåner från firebase")

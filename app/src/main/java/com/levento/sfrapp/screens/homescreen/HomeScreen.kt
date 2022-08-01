@@ -18,41 +18,19 @@ import com.levento.sfrapp.screens.screencomponents.ContentList
 import com.levento.sfrapp.screens.screencomponents.NewsRow
 import com.levento.sfrapp.models.PlaceHolders
 import com.levento.sfrapp.navigation.NavRoutes
+import com.levento.sfrapp.screens.homescreen.HomeViewModel
 import com.levento.sfrapp.ui.theme.SFRAPPTheme
 import com.levento.sfrapp.ui.theme.backgroundColor
 
 
 @Composable
 fun HomeScreen(
-    viewModel: MainViewModel,
-    navController: NavHostController,
+    newsArticles: List<Article>,
+    exclusiveBenefits: List<Benefit>,
+    onBenefitClick: (Benefit) -> Unit,
+    onArticleClick: (Article) -> Unit,
+
 ) {
-
-    val newsArticles by remember { viewModel.articles }
-    val exclusiveBenefits by remember { viewModel.exclusiveBenefits }
-
-    val onBenefitClick: (Benefit) -> Unit = { benefit ->
-
-        viewModel.setCurrentBenefit(benefit)
-        navController.navigate(NavRoutes.Benefits.route) {
-            popUpTo(navController.graph.findStartDestination().id) {
-                saveState = true
-            }
-            launchSingleTop = true
-            restoreState = true
-        }
-
-        navController.navigate(NavRoutes.BenefitDetailScreen.route) {
-            launchSingleTop
-        }
-    }
-
-    val onArticleClick: (Article) -> Unit = { article ->
-        viewModel.setCurrentArticle(article)
-        navController.navigate(NavRoutes.ArticleDetailScreen.route) {
-            launchSingleTop
-        }
-    }
 
     SFRAPPTheme() {
         Column(
@@ -60,11 +38,6 @@ fun HomeScreen(
                 .background(backgroundColor)
                 .fillMaxHeight()
         ) {
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(80.dp)
-            )
 
             ContentList("Nyheter") {
                 NewsRow(newsArticles, onArticleClick)

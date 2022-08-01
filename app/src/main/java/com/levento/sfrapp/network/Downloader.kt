@@ -10,7 +10,7 @@ import java.io.InputStream
 import java.lang.Exception
 import java.net.HttpURLConnection
 
-class Downloader(var urlAddress: String) {
+class Downloader(var urlAddress: String = "https://smaforetagarna.se/nyheter/feed/") {
 
     suspend fun downloadData(): ArrayList<Article> {
 

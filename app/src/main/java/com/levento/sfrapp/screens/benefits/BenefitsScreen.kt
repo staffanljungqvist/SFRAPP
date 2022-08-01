@@ -13,23 +13,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.levento.sfrapp.models.Benefit
+import com.levento.sfrapp.models.BenefitCategory
 import com.levento.sfrapp.navigation.NavRoutes
 import com.levento.sfrapp.screens.screencomponents.BenefitRow
 import com.levento.sfrapp.screens.screencomponents.ContentList
 import com.levento.sfrapp.ui.theme.SFRAPPTheme
 import com.levento.sfrapp.ui.theme.backgroundColor
+import java.util.*
 
 @Composable
-fun BenefitsScreen(viewModel: MainViewModel, navController: NavHostController) {
-
-    val categoryList by remember { viewModel.populatedCategories }
-
-    val onBenefitClick: (Benefit) -> Unit = { benefit ->
-        viewModel.setCurrentBenefit(benefit)
-        navController.navigate(NavRoutes.BenefitDetailScreen.route) {
-            launchSingleTop
-        }
-    }
+fun BenefitsScreen(
+    categoryList: List<BenefitCategory>,
+    onBenefitClick: (Benefit) -> Unit
+) {
 
     SFRAPPTheme() {
         Column(modifier = Modifier.background(backgroundColor)) {

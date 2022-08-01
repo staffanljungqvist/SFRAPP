@@ -6,13 +6,13 @@ import com.levento.sfrapp.network.Downloader
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
-class NewsRepository @Inject constructor() {
+class NewsRepository(
+) {
 
-    val urlAddress = "https://smaforetagarna.se/nyheter/feed/"
+
 
     suspend fun getNews(): List<Article> {
-        val result = Downloader(urlAddress).downloadData()
+        val result = Downloader().downloadData()
         if (result.isEmpty()) {
             return PlaceHolders.newsList
         } else {
@@ -26,6 +26,3 @@ class NewsRepository @Inject constructor() {
         return selectedArticle
     }
 }
-
-
-val placeHolderNews = listOf<Article>()

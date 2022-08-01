@@ -28,6 +28,7 @@ import com.levento.sfrapp.ui.theme.gray800
 import com.levento.sfrapp.ui.theme.red
 import dev.chrisbanes.snapper.ExperimentalSnapperApi
 import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
+import com.levento.sfrapp.R
 
 
 //Todo byt ut articles till lista med Artikelobjet
@@ -67,7 +68,7 @@ fun NewsCard(article: Article, onArticleClick: (Article) -> Unit) {
         ) {
             ArticleThumbnail(article.imageUrl)
             Text(
-                text = article.title!!,
+                text = article.title ?: "Missing headline",
                 style = MaterialTheme.typography.h4,
                 color = red,
                 maxLines = 3,
@@ -95,7 +96,7 @@ fun NewsCard(article: Article, onArticleClick: (Article) -> Unit) {
 fun ArticleThumbnail(image: String?) {
     Image(
         painter = if (image == null) {
-            painterResource(id = PlaceHolders.categoryImage)
+            painterResource(id = R.drawable.placeholder_img)
         } else {
             rememberAsyncImagePainter(image)
         },

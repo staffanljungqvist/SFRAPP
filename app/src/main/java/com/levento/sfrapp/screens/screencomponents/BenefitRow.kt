@@ -102,7 +102,9 @@ fun BenefitCard(
                         .clip(shapes.small),
                     contentScale = ContentScale.Crop
                 )
-                Offer(benefit.dealtext1, benefit.dealtext2)
+                //Text för testsyfte. byt it med dealtext1 och dealtext2 när firebase är ifyllt.
+
+                Offer("Erbjudande", "50% rabatt")
             }
         }
     }
@@ -110,6 +112,7 @@ fun BenefitCard(
 
 @Composable
 fun Offer(offerTitle: String, offerSubTitle: String) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -131,11 +134,6 @@ fun Offer(offerTitle: String, offerSubTitle: String) {
     }
 }
 
-val placeHolderBenefit = Benefit(
-    title = "Förmån",
-    dealtext1 = "Rabatter på våra stationer",
-    dealtext2 = "bensin, tvätt, hyrbil m.m"
-)
 
 @Preview(heightDp = 100, widthDp = 250)
 @Composable

@@ -39,19 +39,20 @@ val typography = Typography(
 
     h1 = TextStyle(
         fontFamily = fontFamilyMontsserat,
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 16.sp,
-        letterSpacing = (1.25).sp
+        fontWeight = FontWeight.Normal,
+        fontSize = 18.sp,
+        letterSpacing = (1.25).sp,
+        //  color = red
     ),
     h2 = TextStyle(
         fontFamily = fontFamilySourceSansPro,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         letterSpacing = (0).sp
     ),
     h3 = TextStyle(
         fontFamily = fontFamilySourceSansPro,
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
         letterSpacing = 0.sp
     ),

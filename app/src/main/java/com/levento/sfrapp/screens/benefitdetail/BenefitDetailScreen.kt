@@ -20,16 +20,11 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.levento.sfrapp.models.Benefit
 import com.levento.sfrapp.R
+import com.levento.sfrapp.screens.screencomponents.HTMLContentView
 
 
 @Composable
-fun BenefitDetailScreen(viewModel: MainViewModel) {
-
-    val benefit by remember { viewModel.currentBenefit }
-
-/*    LaunchedEffect(benefitId) {
-        viewModel.getBenefit(benefitId)
-    }*/
+fun BenefitDetailScreen(benefit: Benefit) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -42,7 +37,7 @@ fun BenefitDetailScreen(viewModel: MainViewModel) {
                 .data(benefit.imageURL)
                 .crossfade(true)
                 .build(),
-            placeholder = painterResource(R.drawable.fordon_kategori),
+            placeholder = painterResource(R.drawable.empty_pic),
             contentDescription = "",
             contentScale = ContentScale.Crop,
         )
@@ -53,27 +48,7 @@ fun BenefitDetailScreen(viewModel: MainViewModel) {
     }
 }
 
-@Composable
-fun HTMLContentView(htmlText: String) {
 
-    Box(Modifier.padding(20.dp).fillMaxHeight()) {
-        val htmlDescription = remember(htmlText) {
-            HtmlCompat.fromHtml(htmlText, HtmlCompat.FROM_HTML_MODE_COMPACT)
-        }
-
-        AndroidView(
-            factory = { context ->
-                TextView(context).apply {
-                    //   movementMethod = LinkMovementMethod.getInstance()
-                }
-            },
-            update = {
-                it.text = htmlDescription
-            }
-        )
-    }
-
-}
 
 @Composable
 fun BenefitContent(benefit: Benefit) {

@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.levento.sfrapp.ui.theme.red
 
 @Composable
 fun ContentList(header: String, content: @Composable () -> Unit) {
@@ -15,9 +16,9 @@ fun ContentList(header: String, content: @Composable () -> Unit) {
         Text(
             text = header.uppercase(),
             style = MaterialTheme.typography.h1,
-            modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
+            modifier = Modifier.padding(16.dp),
         )
         content()
-        Spacer(modifier = Modifier.padding(bottom = 24.dp))
+        Spacer(modifier = Modifier.padding(bottom = 28.dp))
     }
 }

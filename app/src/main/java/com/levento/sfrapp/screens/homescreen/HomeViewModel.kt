@@ -13,40 +13,11 @@ import com.levento.sfrapp.repository.BenefitsRepository
 import com.levento.sfrapp.repository.NewsRepository
 import kotlinx.coroutines.launch
 
-class HomeViewModel : ViewModel() {
-
-    private val newsRepository: NewsRepository = NewsRepository()
-    private val benefitsRepository: BenefitsRepository = BenefitsRepository()
-
-    var newsArticles = mutableStateOf(listOf(Article()))
-    var exclusiveBenefits by mutableStateOf(listOf(Benefit()))
-
-    init {
-        getNews()
-        getBenefits()
-    }
-
-    fun getNews() {
-        viewModelScope.launch {
-            val result = newsRepository.getNews()
-            Log.d(TAG, "Hämtade nyheter")
-            newsArticles.value = result
-        }
-    }
+class HomeViewModel: ViewModel() {
 
 
-    fun getBenefits() {
-        viewModelScope.launch {
-            val benefitdata = benefitsRepository.getAllBenefitsFromFirestore()
-
-            if (benefitdata.data != null) {
-                exclusiveBenefits =
-                    extractExclusiveBenefits(benefitdata.data!!) ?: listOf<Benefit>()
-            } else {
-                Log.d(TAG, "något gick fel")
-            }
-        }
-    }
+    private val _exclusiveBenefits = mutableStateOf(listOf<Benefit>())
+    val exclusiveBenefits = _exclusiveBenefits
 
     fun extractExclusiveBenefits(benefits: List<Benefit>): List<Benefit> {
         val exclusiveResult = mutableListOf<Benefit>()

@@ -4,16 +4,20 @@ import MainViewModel
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.levento.sfrapp.models.Article
+import com.levento.sfrapp.models.Benefit
 import com.levento.sfrapp.models.PlaceHolders
 import com.levento.sfrapp.navigation.BottomNavigationBar
 import com.levento.sfrapp.navigation.NavRoutes
@@ -22,18 +26,22 @@ import com.levento.sfrapp.screens.benefitdetail.BenefitDetailScreen
 import com.levento.sfrapp.ui.theme.SFRAPPTheme
 
 class MainActivity : ComponentActivity() {
-    //  private val viewModel: MainViewModel by viewModels()
+
+    private val viewModel by viewModels<MainViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModel.load()
+
         setContent {
+
+            val isLoading by viewModel.isLoading.collectAsState()
+
             SFRAPPTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    MainScreen()
+                when {
+                    isLoading -> SplashScreen()
+                    else -> MainScreen(viewModel)
                 }
             }
         }
@@ -42,10 +50,9 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun MainScreen(viewModel: MainViewModel = viewModel()) {
+fun MainScreen(viewModel: MainViewModel) {
 
     val navController = rememberNavController()
-    val currentArticle by remember { mutableStateOf(viewModel.currentArticle) }
 
     Scaffold(
         content = {
@@ -66,32 +73,48 @@ fun NavigationHost(
     viewModel: MainViewModel
 ) {
 
+    val newsArticles by remember { viewModel.articles }
+    val exclusiveBenefits by remember { viewModel.exclusiveBenefits }
+
+    val currentArticle by remember { viewModel.currentArticle }
+    val currentBenefit by remember { viewModel.currentBenefit }
+    val categoryList by remember { viewModel.populatedCategories }
+
+    val onBenefitClick: (Benefit) -> Unit = { benefit ->
+        viewModel.setCurrentBenefit(benefit)
+        navController.navigate(NavRoutes.BenefitDetailScreen.route) {
+            launchSingleTop
+        }
+    }
+
+    val onArticleClick: (Article) -> Unit = { article ->
+        viewModel.setCurrentArticle(article)
+        navController.navigate(NavRoutes.ArticleDetailScreen.route) {
+            launchSingleTop
+        }
+    }
+
+
     NavHost(navController = navController, startDestination = NavRoutes.Home.route) {
         composable(NavRoutes.Home.route) {
-            HomeScreen(navController = navController, viewModel = viewModel)
+            HomeScreen(
+                newsArticles = newsArticles,
+                exclusiveBenefits = exclusiveBenefits,
+                onArticleClick = onArticleClick,
+                onBenefitClick = onBenefitClick
+            )
         }
 
         composable(NavRoutes.ArticleDetailScreen.route) { backStackEntry ->
-            ArticleDetailScreen(viewModel)
-
-/*            val articleId = backStackEntry.arguments?.getString("articleTitle")
-            articleId?.let { title ->
-                ArticleDetailScreen(title)
-            }*/
+            ArticleDetailScreen(currentArticle)
         }
 
         composable(NavRoutes.BenefitDetailScreen.route) { backStackEntry ->
-
-            BenefitDetailScreen(viewModel)
-
-/*            val benefitId = backStackEntry.arguments?.getString("benefitId")
-            benefitId?.let { id ->
-                BenefitDetailScreen(id)
-            }*/
+            BenefitDetailScreen(currentBenefit)
         }
 
         composable(NavRoutes.Benefits.route) {
-            BenefitsScreen(navController = navController, viewModel = viewModel)
+            BenefitsScreen(categoryList = categoryList, onBenefitClick = onBenefitClick)
         }
 
         composable(NavRoutes.Card.route) {

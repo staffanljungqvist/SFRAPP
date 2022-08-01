@@ -1,31 +1,28 @@
+import android.app.Application
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.levento.sfrapp.models.*
-import com.levento.sfrapp.repository.BenefitsRepository
-import com.levento.sfrapp.repository.NewsRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.levento.sfrapp.SFRAPP
+import com.levento.sfrapp.models.Article
+import com.levento.sfrapp.models.Benefit
+import com.levento.sfrapp.models.BenefitCategory
+import com.levento.sfrapp.models.PlaceHolders
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-const val TAG = "mydebug"
 
-@HiltViewModel
-class MainViewModel @Inject constructor(
+class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-) : ViewModel() {
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> = _isLoading
 
-  //  private val newsRepository: NewsRepository = NewsRepository()
-    private val benefitsRepository: BenefitsRepository = BenefitsRepository()
-    private val newsRepository = NewsRepository()
+    private val newsRepository = getApplication<SFRAPP>().newsRepository
+    private val benefitsRepository = getApplication<SFRAPP>().benefitRepository
 
     private var allBenefits = listOf<Benefit>()
-
-    var loading = mutableStateOf(false)
-
-    private val _benefitsLoaded = mutableStateOf(false)
-    var benefitsLoaded = _benefitsLoaded
 
     private val _articles = mutableStateOf(listOf<Article>())
     val articles = _articles
@@ -44,20 +41,19 @@ class MainViewModel @Inject constructor(
 
 
     //Funktioner som körs när appen startar.
-    init {
-        getNews()
-        getBenefits()
+    fun load() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _isLoading.value = true
+            getNews()
+            getBenefits()
+            _isLoading.value = false
+        }
     }
 
-    //Hämtar och publicerar en lista med Article
 
-    fun getNews() {
-        viewModelScope.launch {
-            val result = newsRepository.getNews()
-            val content = result[0].content
-
-            _articles.value = result
-        }
+    //Hämtar och publicerar en lista med artiklar
+    private suspend fun getNews() {
+        _articles.value = newsRepository.getNews()
     }
 
     /*
@@ -67,41 +63,31 @@ class MainViewModel @Inject constructor(
     state-variabeln categoriesSorted. En lista skapas och publiceras även för exclusiveBenefits, från funktionen
     extractExclusiveBenefits
      */
-    fun getBenefits() {
-        _benefitsLoaded.value = false
-        viewModelScope.launch {
-            var populatedCategories = listOf<BenefitCategory>()
-            val benefitdata = benefitsRepository.getAllBenefitsFromFirestore()
-            val categorydata = benefitsRepository.getCategoriesFromFirestore()
+    private suspend fun getBenefits() {
+        var populatedCategories = listOf<BenefitCategory>()
+        val benefitdata = benefitsRepository.getAllBenefitsFromFirestore()
+        val categorydata = benefitsRepository.getCategoriesFromFirestore()
 
-            benefitdata.data?.get(0)?.let {
-                printContent(it)
-            }
-
-         //   benefitsRepository.getBenefitFromFirestore()
-
-
-            if (benefitdata.data != null && categorydata.data != null) {
-                Log.d(TAG, "Received " + benefitdata.data?.size + " benefits from repository")
-                allBenefits = benefitdata.data!!
-                populatedCategories = fillCategoriesWithBenefits(categorydata.data!!, benefitdata.data!!)
-            } else {
-                Log.d(TAG, "något gick fel")
-                populatedCategories =
-                    fillCategoriesWithBenefits(PlaceHolders.categories, PlaceHolders.benefits)
-            }
-            _populatedCategories.value = populatedCategories
-            _exclusiveBenefits.value = extractExclusiveBenefits(populatedCategories) ?: listOf<Benefit>()
-            Log.d(TAG, "Hämtade exklusiva förmåner: " + _exclusiveBenefits.value)
-            _benefitsLoaded.value = true
+        if (benefitdata.data != null && categorydata.data != null) {
+            Log.d(TAG, "Received " + benefitdata.data?.size + " benefits from repository")
+            allBenefits = benefitdata.data!!
+            populatedCategories =
+                fillCategoriesWithBenefits(categorydata.data!!, benefitdata.data!!)
+        } else {
+            Log.d(TAG, "något gick fel")
+            populatedCategories =
+                fillCategoriesWithBenefits(PlaceHolders.categories, PlaceHolders.benefits)
         }
+        _populatedCategories.value = populatedCategories
+        _exclusiveBenefits.value =
+            extractExclusiveBenefits(populatedCategories) ?: listOf<Benefit>()
+        Log.d(TAG, "Hämtade exklusiva förmåner: " + _exclusiveBenefits.value)
     }
 
     /*
     Söker igenom en medskickad lista med Category, Hittar elementet med Aktuella förmåner, som skickas tillbaka som en ny lista av benefits"
      */
     fun extractExclusiveBenefits(categories: List<BenefitCategory>): List<Benefit>? {
-
         val exclusiveCategory = categories.firstOrNull { it.title!!.contains("Aktuella") }
         if (exclusiveCategory != null) {
             Log.d(TAG, "Det fanns inga aktuella kategorier")
@@ -110,7 +96,7 @@ class MainViewModel @Inject constructor(
         return exclusiveCategory?.benefits
     }
 
-    fun fillCategoriesWithBenefits(
+    private fun fillCategoriesWithBenefits(
         categoryList: List<BenefitCategory>,
         benefitList: List<Benefit>
     ): List<BenefitCategory> {
@@ -137,18 +123,9 @@ class MainViewModel @Inject constructor(
         _currentBenefit.value = benefit
     }
 
-    fun retrieveBenefit(benefitId: String): Benefit? {
-        val benefit = allBenefits.find {it.id == benefitId }
-        Log.d(TAG, "Received single benefit: " + benefit?.title + " with id: " + benefit?.id)
-        return benefit
-    }
-
     fun getBenefitBackground(): String {
         return "https://firebasestorage.googleapis.com/v0/b/sfr-app.appspot.com/o/affarsnatverka.jpeg?alt=media&token=0afa42de-1503-4e5f-a36a-88bba4c2fe9f"
     }
-
-    //Används endast i testsyfte
-   private fun printContent(benefit: Benefit) {
-        Log.d("parser", "Benefit title: " + benefit.title + "benefit content: " + benefit.content)
-    }
 }
+
+const val TAG = "mydebug"
