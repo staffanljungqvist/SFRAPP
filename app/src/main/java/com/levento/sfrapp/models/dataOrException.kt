@@ -1,4 +1,4 @@
-package com.levento.sfrapp.domain
+package com.levento.sfrapp.models
 
 data class DataOrException<T, E : Exception?>(
     var data: T? = null,

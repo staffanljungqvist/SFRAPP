@@ -1,4 +1,4 @@
-package com.levento.sfrapp.domain
+package com.levento.sfrapp.models
 
 import com.levento.sfrapp.R
 

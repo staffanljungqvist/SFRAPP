@@ -1,4 +1,4 @@
-package com.levento.sfrapp.domain
+package com.levento.sfrapp.models
 
 data class UserCompany(
     val memberId: String,

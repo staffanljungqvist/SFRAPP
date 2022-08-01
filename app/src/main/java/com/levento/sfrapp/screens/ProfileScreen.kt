@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.levento.sfrapp.domain.PlaceHolders
-import com.levento.sfrapp.domain.UserCompany
+import com.levento.sfrapp.models.PlaceHolders
+import com.levento.sfrapp.models.UserCompany
 
 @Composable
 fun ProfileScreen(company: UserCompany) {

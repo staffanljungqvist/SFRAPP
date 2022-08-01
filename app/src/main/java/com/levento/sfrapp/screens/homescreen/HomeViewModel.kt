@@ -7,9 +7,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.levento.sfrapp.domain.Article
-import com.levento.sfrapp.domain.Benefit
-import com.levento.sfrapp.domain.BenefitCategory
+import com.levento.sfrapp.models.Article
+import com.levento.sfrapp.models.Benefit
 import com.levento.sfrapp.repository.BenefitsRepository
 import com.levento.sfrapp.repository.NewsRepository
 import kotlinx.coroutines.launch

@@ -22,10 +22,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import com.levento.sfrapp.domain.Article
-import com.levento.sfrapp.domain.PlaceHolders
-import com.levento.sfrapp.repository.placeHolderNews
-import com.levento.sfrapp.ui.theme.SFRAPPTheme
+import com.levento.sfrapp.models.Article
+import com.levento.sfrapp.models.PlaceHolders
 import com.levento.sfrapp.ui.theme.gray800
 import com.levento.sfrapp.ui.theme.red
 import dev.chrisbanes.snapper.ExperimentalSnapperApi

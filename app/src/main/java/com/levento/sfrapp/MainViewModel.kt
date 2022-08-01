@@ -2,7 +2,7 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.levento.sfrapp.domain.*
+import com.levento.sfrapp.models.*
 import com.levento.sfrapp.repository.BenefitsRepository
 import com.levento.sfrapp.repository.NewsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

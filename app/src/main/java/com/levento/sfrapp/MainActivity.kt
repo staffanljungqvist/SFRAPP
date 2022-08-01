@@ -14,7 +14,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.levento.sfrapp.domain.PlaceHolders
+import com.levento.sfrapp.models.PlaceHolders
 import com.levento.sfrapp.navigation.BottomNavigationBar
 import com.levento.sfrapp.navigation.NavRoutes
 import com.levento.sfrapp.screens.*

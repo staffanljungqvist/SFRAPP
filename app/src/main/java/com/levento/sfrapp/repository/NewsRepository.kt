@@ -1,7 +1,7 @@
 package com.levento.sfrapp.repository
 
-import com.levento.sfrapp.domain.Article
-import com.levento.sfrapp.domain.PlaceHolders
+import com.levento.sfrapp.models.Article
+import com.levento.sfrapp.models.PlaceHolders
 import com.levento.sfrapp.network.Downloader
 import javax.inject.Inject
 import javax.inject.Singleton

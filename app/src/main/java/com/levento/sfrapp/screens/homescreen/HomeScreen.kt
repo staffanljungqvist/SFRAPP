@@ -9,17 +9,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import com.levento.sfrapp.domain.Article
-import com.levento.sfrapp.domain.Benefit
+import com.levento.sfrapp.models.Article
+import com.levento.sfrapp.models.Benefit
 import com.levento.sfrapp.screens.screencomponents.BenefitRow
 import com.levento.sfrapp.screens.screencomponents.ContentList
 import com.levento.sfrapp.screens.screencomponents.NewsRow
-import com.levento.sfrapp.domain.PlaceHolders
+import com.levento.sfrapp.models.PlaceHolders
 import com.levento.sfrapp.navigation.NavRoutes
-import com.levento.sfrapp.screens.homescreen.HomeViewModel
 import com.levento.sfrapp.ui.theme.SFRAPPTheme
 import com.levento.sfrapp.ui.theme.backgroundColor
 
