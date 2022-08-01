@@ -3,8 +3,10 @@ package com.levento.sfrapp.screens.screencomponents
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
@@ -23,24 +25,33 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import com.levento.sfrapp.domain.Benefit
-import com.levento.sfrapp.domain.PlaceHolders
+import com.levento.sfrapp.models.Benefit
+import com.levento.sfrapp.models.PlaceHolders
 import com.levento.sfrapp.ui.theme.SFRAPPTheme
 import com.levento.sfrapp.ui.theme.brown
+import dev.chrisbanes.snapper.ExperimentalSnapperApi
+import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 
 
+@OptIn(ExperimentalSnapperApi::class)
 @Composable
 fun BenefitRow(
     benefits: List<Benefit>,
     categoryImage: String? = null,
     onBenefitClick: (Benefit) -> Unit
 ) {
+
+    val lazyListState: LazyListState = rememberLazyListState()
+
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(32.dp),
-        contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
+        contentPadding = PaddingValues(start = 16.dp, end = 70.dp),
+        state = lazyListState,
+        flingBehavior = rememberSnapperFlingBehavior(lazyListState),
+
     ) {
         items(benefits) { benefit ->
-            BenefitCard(benefit = benefit, onClick = onBenefitClick)
+            BenefitCard(benefit = benefit, onClick = onBenefitClick, categoryImage = categoryImage)
         }
     }
 }
@@ -91,7 +102,9 @@ fun BenefitCard(
                         .clip(shapes.small),
                     contentScale = ContentScale.Crop
                 )
-                Offer(benefit.dealtext1, benefit.dealtext2)
+                //Text för testsyfte. byt it med dealtext1 och dealtext2 när firebase är ifyllt.
+
+                Offer("Erbjudande", "50% rabatt")
             }
         }
     }
@@ -99,6 +112,7 @@ fun BenefitCard(
 
 @Composable
 fun Offer(offerTitle: String, offerSubTitle: String) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -120,11 +134,6 @@ fun Offer(offerTitle: String, offerSubTitle: String) {
     }
 }
 
-val placeHolderBenefit = Benefit(
-    title = "Förmån",
-    dealtext1 = "Rabatter på våra stationer",
-    dealtext2 = "bensin, tvätt, hyrbil m.m"
-)
 
 @Preview(heightDp = 100, widthDp = 250)
 @Composable

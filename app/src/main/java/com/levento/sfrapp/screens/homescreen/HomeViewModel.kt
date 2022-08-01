@@ -7,29 +7,30 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.levento.sfrapp.domain.Article
-import com.levento.sfrapp.domain.Benefit
+import com.levento.sfrapp.models.Article
+import com.levento.sfrapp.models.Benefit
 import com.levento.sfrapp.repository.BenefitsRepository
 import com.levento.sfrapp.repository.NewsRepository
 import kotlinx.coroutines.launch
 
 class HomeViewModel: ViewModel() {
 
-    private val newsRepository: NewsRepository = NewsRepository()
-    private val benefitsRepository: BenefitsRepository = BenefitsRepository()
 
-    var newsArticles = mutableStateOf(listOf(Article()))
-    val exclusiveBenefits by mutableStateOf(listOf(Benefit()))
+    private val _exclusiveBenefits = mutableStateOf(listOf<Benefit>())
+    val exclusiveBenefits = _exclusiveBenefits
 
-    init {
-        getNews()
-    }
-
-    fun getNews() {
-        viewModelScope.launch {
-            val result = newsRepository.getNews()
-            Log.d(TAG, "Hämtade nyheter")
-            newsArticles.value = result
+    fun extractExclusiveBenefits(benefits: List<Benefit>): List<Benefit> {
+        val exclusiveResult = mutableListOf<Benefit>()
+        for (benefit in benefits) {
+            benefit.category?.let { categories ->
+                for (category in categories) {
+                    if (category == "Aktuella") {
+                        exclusiveResult.add(benefit)
+                    }
+                }
+            }
         }
+        Log.d(TAG, "Antal exklusiva förmåner: " + exclusiveResult.size)
+        return exclusiveResult
     }
 }

@@ -2,7 +2,7 @@ package com.levento.sfrapp.network
 
 import TAG
 import android.util.Log
-import com.levento.sfrapp.domain.Article
+import com.levento.sfrapp.models.Article
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 import org.xmlpull.v1.XmlPullParserFactory

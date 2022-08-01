@@ -5,9 +5,9 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.levento.sfrapp.domain.Benefit
-import com.levento.sfrapp.domain.BenefitCategory
-import com.levento.sfrapp.domain.PlaceHolders
+import com.levento.sfrapp.models.Benefit
+import com.levento.sfrapp.models.BenefitCategory
+import com.levento.sfrapp.models.PlaceHolders
 import com.levento.sfrapp.repository.BenefitsRepository
 import kotlinx.coroutines.launch
 

@@ -1,4 +1,4 @@
-package com.levento.sfrapp.domain
+package com.levento.sfrapp.models
 
 data class BenefitCategory(
     var imageURL: String? = null,

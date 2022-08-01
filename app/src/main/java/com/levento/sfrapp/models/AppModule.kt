@@ -1,4 +1,4 @@
-package com.levento.sfrapp.domain
+package com.levento.sfrapp.models
 
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module

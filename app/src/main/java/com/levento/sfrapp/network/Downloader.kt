@@ -2,8 +2,7 @@ package com.levento.sfrapp.network
 
 import TAG
 import android.util.Log
-import com.levento.sfrapp.domain.Article
-import com.levento.sfrapp.domain.PlaceHolders
+import com.levento.sfrapp.models.Article
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.BufferedInputStream
@@ -11,7 +10,7 @@ import java.io.InputStream
 import java.lang.Exception
 import java.net.HttpURLConnection
 
-class Downloader(var urlAddress: String) {
+class Downloader(var urlAddress: String = "https://smaforetagarna.se/nyheter/feed/") {
 
     suspend fun downloadData(): ArrayList<Article> {
 

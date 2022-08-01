@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.levento.sfrapp">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".SFRAPP"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,6 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SFRAPP"
         tools:targetApi="31">
+        <activity
+            android:name=".CardActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat"
+            />
         <activity
             android:name=".MainActivity"
             android:exported="true"

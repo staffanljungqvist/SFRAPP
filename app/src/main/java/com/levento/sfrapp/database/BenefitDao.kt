@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.levento.sfrapp.domain.BenefitCategory
-import com.levento.sfrapp.domain.BenefitEntity
+import com.levento.sfrapp.models.BenefitEntity
 
 @Dao
 interface BenefitDao {

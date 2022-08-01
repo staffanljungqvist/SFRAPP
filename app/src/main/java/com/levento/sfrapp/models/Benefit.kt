@@ -1,6 +1,4 @@
-package com.levento.sfrapp.domain
-
-import java.util.*
+package com.levento.sfrapp.models
 
 data class Benefit(
     var id: String = PlaceHolders.id.toString(),
