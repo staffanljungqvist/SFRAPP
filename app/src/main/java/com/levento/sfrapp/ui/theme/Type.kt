@@ -1,6 +1,7 @@
 package com.levento.sfrapp.ui.theme
 
 import androidx.compose.material.Typography
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -42,7 +43,7 @@ val typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 18.sp,
         letterSpacing = (1.25).sp,
-        //  color = red
+       //   color = Color.White
     ),
     h2 = TextStyle(
         fontFamily = fontFamilySourceSansPro,

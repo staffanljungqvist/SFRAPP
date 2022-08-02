@@ -4,7 +4,7 @@ import com.levento.sfrapp.R
 
 object NavBarItems {
 
-    val defaultIcons = false
+    val defaultIcons = true
 
     val BarItems = listOf(
         BarItem(

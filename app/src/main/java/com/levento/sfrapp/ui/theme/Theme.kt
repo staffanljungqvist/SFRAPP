@@ -39,8 +39,8 @@ fun SFRAPPTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable
 
     SideEffect {
         systemUiController.setSystemBarsColor(
-            color = Color.White,
-            darkIcons = true
+            color = blue,
+            darkIcons = false
         )
     }
 

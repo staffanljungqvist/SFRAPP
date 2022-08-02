@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.levento.sfrapp.R
+import com.levento.sfrapp.ui.theme.blue
 
 @Composable
 fun SplashScreen() {
@@ -27,7 +28,7 @@ fun SplashScreen() {
                 painter = painterResource(id = R.drawable.sfr_logo),
                 contentDescription = ""
             )
-            CircularProgressIndicator()
+            CircularProgressIndicator(color = blue)
         }
         
     }

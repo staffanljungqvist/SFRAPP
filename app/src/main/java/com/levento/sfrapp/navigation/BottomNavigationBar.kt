@@ -2,6 +2,7 @@ package com.levento.sfrapp.navigation
 
 import android.content.Intent
 import android.graphics.Paint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.*
@@ -21,15 +22,18 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.levento.sfrapp.CardActivity
 import com.levento.sfrapp.ui.theme.blue
+import com.levento.sfrapp.ui.theme.dark
+import com.levento.sfrapp.ui.theme.selectedColor
+import com.levento.sfrapp.ui.theme.unselectedColor
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
 
     CustomBottomNavigation(
-        backgroundColor = Color.White,
+        backgroundColor = dark,
         modifier = Modifier.height(85.dp),
-        // contentColor = Color.Blue
-    ) {
+
+        ) {
         val backStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = backStackEntry?.destination?.route
 
@@ -39,8 +43,7 @@ fun BottomNavigationBar(navController: NavController) {
 
             val selected = currentRoute == navItem.route
             val cardItem = navItem.title == "Kort"
-            val selectedColor = blue
-            val unselectedColor = Color.Gray
+
 
             BottomNavigationItem(
                 selected = selected,
@@ -81,10 +84,10 @@ fun BottomNavigationBar(navController: NavController) {
                         Text(
                             text = navItem.title,
                             fontSize = 14.sp,
-                        color = if (selected) selectedColor else unselectedColor,
+                            color = if (selected) selectedColor else unselectedColor,
                             modifier = Modifier
                                 .padding(0.dp)
-                            )
+                        )
                     }
                 } else null,
                 modifier = Modifier

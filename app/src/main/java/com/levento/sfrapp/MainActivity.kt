@@ -1,6 +1,7 @@
 package com.levento.sfrapp
 
 import MainViewModel
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,19 +12,24 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.firestore.v1.TransactionOptionsOrBuilder
 import com.levento.sfrapp.models.Article
 import com.levento.sfrapp.models.Benefit
 import com.levento.sfrapp.models.PlaceHolders
 import com.levento.sfrapp.navigation.BottomNavigationBar
 import com.levento.sfrapp.navigation.NavRoutes
+import com.levento.sfrapp.navigation.TopBar
 import com.levento.sfrapp.screens.*
 import com.levento.sfrapp.screens.benefitdetail.BenefitDetailScreen
 import com.levento.sfrapp.ui.theme.SFRAPPTheme
+import com.levento.sfrapp.ui.theme.backgroundColor
 
 class MainActivity : ComponentActivity() {
 
@@ -54,7 +60,11 @@ fun MainScreen(viewModel: MainViewModel) {
 
     val navController = rememberNavController()
 
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = backStackEntry?.destination?.route
+
     Scaffold(
+        topBar = { TopBar(currentRoute) },
         content = {
             NavigationHost(
                 navController = navController,
@@ -138,7 +148,7 @@ fun AppPreview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
         ) {
-            //   MainScreen()
+               MainScreen(viewModel = MainViewModel(SFRAPP()))
         }
     }
 }
