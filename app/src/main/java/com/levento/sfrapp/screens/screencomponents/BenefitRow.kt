@@ -134,6 +134,12 @@ fun Offer(offerTitle: String, offerSubTitle: String) {
     }
 }
 
+@Preview
+@Composable
+fun OfferPreview() {
+    BenefitCard(benefit = PlaceHolders.benefits[0], onClick = {})
+}
+
 
 @Preview(heightDp = 100, widthDp = 250)
 @Composable
