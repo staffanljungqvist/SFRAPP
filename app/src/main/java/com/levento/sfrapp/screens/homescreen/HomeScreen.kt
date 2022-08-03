@@ -1,12 +1,15 @@
 package com.levento.sfrapp.screens
 
 import MainViewModel
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -21,6 +24,7 @@ import com.levento.sfrapp.navigation.NavRoutes
 import com.levento.sfrapp.screens.homescreen.HomeViewModel
 import com.levento.sfrapp.ui.theme.SFRAPPTheme
 import com.levento.sfrapp.ui.theme.backgroundColor
+import com.levento.sfrapp.R
 
 
 @Composable
@@ -33,21 +37,30 @@ fun HomeScreen(
 ) {
 
     SFRAPPTheme() {
-        Column(
-            modifier = Modifier
-                .background(backgroundColor)
-                .fillMaxHeight()
-        ) {
+        Box {
+            Image(
+                painter = painterResource(id = R.drawable.background_image),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
 
-            ContentList("Nyheter") {
-                NewsRow(newsArticles, onArticleClick)
-            }
+            Column(
+                modifier  = Modifier
+                //    .background(backgroundColor)
+                    .fillMaxHeight()
+            ) {
 
-            ContentList(header = "Aktuella förmåner") {
-                BenefitRow(
-                    benefits = exclusiveBenefits,
-                    onBenefitClick = onBenefitClick
-                )
+                ContentList("Nyheter") {
+                    NewsRow(newsArticles, onArticleClick)
+                }
+
+                ContentList(header = "Aktuella förmåner") {
+                    BenefitRow(
+                        benefits = exclusiveBenefits,
+                        onBenefitClick = onBenefitClick
+                    )
+                }
             }
         }
     }

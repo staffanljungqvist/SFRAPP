@@ -39,7 +39,7 @@ fun TopBar(
             .fillMaxWidth()
     ) {
         Box(
-            contentAlignment = Alignment.Center,
+            contentAlignment = Alignment.BottomCenter,
             modifier = Modifier
         ) {
             Column() {
@@ -56,14 +56,14 @@ fun TopBar(
             Box(
                 modifier = Modifier
                     .size(80.dp)
-                    .clip(CircleShape)
-                    .background(backgroundColor),
+                    .clip(CircleShape),
+                //    .background(backgroundColor),
                 contentAlignment = Alignment.Center
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.bee),
                     contentDescription = null,
-                    modifier = Modifier.size(60.dp)
+                    modifier = Modifier.size(50.dp)
                 )
             }
         }
