@@ -10,10 +10,14 @@ val gray900 = Color(0xFF333333)
 val gray800 = gray900.copy(alpha = 0.8f)
 
 val blue = Color(0xFF06539D)
+val mediumBlue = Color(0xFF0B87ED)
+val blueLight = Color(0xFF5AB4FB)
+val newBlue = Color(0xFF3888CB)
 val red = Color(0xFF622D38)
 val brown = Color(0xFF936517)
 val dark = Color(0xFF0D2C43)
 val lightGray = Color(0xFFF0F2F9)
-val backgroundColor = Color.White
-val selectedColor = Color(0xFF5AB4FB)
-val unselectedColor = Color.White.copy(alpha = 0.8f)
+val screenBackgroundColor = lightGray
+val BottomBackgroundCOlor = Color.White
+val selectedColor = blueLight
+val unselectedColor = dark.copy(alpha = 0.8F)

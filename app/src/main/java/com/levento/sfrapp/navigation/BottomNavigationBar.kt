@@ -1,10 +1,7 @@
 package com.levento.sfrapp.navigation
 
 import android.content.Intent
-import android.graphics.Paint
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -13,25 +10,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.levento.sfrapp.CardActivity
-import com.levento.sfrapp.ui.theme.blue
-import com.levento.sfrapp.ui.theme.dark
-import com.levento.sfrapp.ui.theme.selectedColor
-import com.levento.sfrapp.ui.theme.unselectedColor
+import com.levento.sfrapp.ui.theme.*
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
 
     CustomBottomNavigation(
-        backgroundColor = dark,
-        modifier = Modifier.height(85.dp),
+        backgroundColor = BottomBackgroundCOlor,
+        modifier = Modifier.height(60.dp)
 
         ) {
         val backStackEntry by navController.currentBackStackEntryAsState()
@@ -64,9 +56,8 @@ fun BottomNavigationBar(navController: NavController) {
                         Icon(
                             painter = painterResource(id = navItem.image),
                             contentDescription = "card icon",
-                            modifier = Modifier
-                                .padding(10.dp),
-                            tint = Color.Unspecified
+                            tint = Color.Unspecified,
+                            modifier = Modifier.padding(vertical = 5.dp)
                         )
                     } else {
                         Icon(
@@ -74,7 +65,7 @@ fun BottomNavigationBar(navController: NavController) {
                             contentDescription = "card icon",
                             tint = if (selected) selectedColor else unselectedColor,
                             modifier = Modifier
-                                .padding(10.dp)
+                                .padding(vertical = 2.dp)
                                 .size(25.dp),
                         )
                     }
@@ -83,10 +74,10 @@ fun BottomNavigationBar(navController: NavController) {
                     {
                         Text(
                             text = navItem.title,
-                            fontSize = 14.sp,
+                          //  fontSize = 14.sp,
                             color = if (selected) selectedColor else unselectedColor,
                             modifier = Modifier
-                                .padding(0.dp)
+                                .padding(vertical = 5.dp)
                         )
                     }
                 } else null,

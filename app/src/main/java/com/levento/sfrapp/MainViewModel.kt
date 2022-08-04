@@ -3,6 +3,11 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import coil.ImageLoader
+import coil.imageLoader
+import coil.request.ImageRequest
+import coil.request.ImageResult
+import coil.size.ViewSizeResolver
 import com.levento.sfrapp.SFRAPP
 import com.levento.sfrapp.models.Article
 import com.levento.sfrapp.models.Benefit
@@ -39,14 +44,21 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val _currentBenefit = mutableStateOf(Benefit())
     val currentBenefit = _currentBenefit
 
+    private val imageLoader = getApplication<SFRAPP>().imageLoader
+
 
     //Funktioner som körs när appen startar.
     fun load() {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.value = true
             getNews()
+            Log.d("initload", "Nyheter hämtade")
             getBenefits()
+            Log.d("initload", "förmåner hämtade")
             _isLoading.value = false
+            loadAllImages(allBenefits, _populatedCategories.value)
+            Log.d("initload", "bilder laddade")
+
         }
     }
 
@@ -126,6 +138,34 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun getBenefitBackground(): String {
         return "https://firebasestorage.googleapis.com/v0/b/sfr-app.appspot.com/o/affarsnatverka.jpeg?alt=media&token=0afa42de-1503-4e5f-a36a-88bba4c2fe9f"
     }
+
+    suspend fun loadAllImages(benefits: List<Benefit>, categories: List<BenefitCategory>) {
+
+        for (benefit in benefits) {
+            benefit.imageURL?.let {
+                benefit.image = loadImage(benefit.imageURL!!)
+            }
+        }
+
+        Log.d("initload", "loadAllImages är färdig med förmånerna")
+
+        for (category in categories) {
+            category.imageURL?.let {
+                category.image = loadImage(category.imageURL!!)
+            }
+        }
+        Log.d("initload", "loadAllImages är färdig med kategorierna")
+    }
+
+    suspend fun loadImage(imageUrl: String): ImageResult {
+        val request = ImageRequest.Builder(getApplication())
+            .data(imageUrl)
+            // Optional, but setting a ViewSizeResolver will conserve memory by limiting the size the image should be preloaded into memory at.
+            .build()
+        val image = imageLoader.execute(request)
+        return image
+    }
+
 }
 
 const val TAG = "mydebug"

@@ -1,25 +1,27 @@
 package com.levento.sfrapp
 
 import MainViewModel
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.google.firestore.v1.TransactionOptionsOrBuilder
 import com.levento.sfrapp.models.Article
 import com.levento.sfrapp.models.Benefit
 import com.levento.sfrapp.models.PlaceHolders
@@ -29,7 +31,6 @@ import com.levento.sfrapp.navigation.TopBar
 import com.levento.sfrapp.screens.*
 import com.levento.sfrapp.screens.benefitdetail.BenefitDetailScreen
 import com.levento.sfrapp.ui.theme.SFRAPPTheme
-import com.levento.sfrapp.ui.theme.backgroundColor
 
 class MainActivity : ComponentActivity() {
 
@@ -39,6 +40,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         viewModel.load()
+
 
         setContent {
 
@@ -66,10 +68,15 @@ fun MainScreen(viewModel: MainViewModel) {
     Scaffold(
         topBar = { TopBar(currentRoute) },
         content = {
-            NavigationHost(
-                navController = navController,
-                viewModel = viewModel
-            )
+            Box() {
+
+                Image(painter = painterResource(id = R.drawable.test_bakgrund), contentDescription = null)
+
+                NavigationHost(
+                    navController = navController,
+                    viewModel = viewModel
+                )
+            }
         },
         bottomBar = {
             BottomNavigationBar(navController = navController)

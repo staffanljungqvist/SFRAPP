@@ -24,7 +24,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageResult
 import com.levento.sfrapp.models.Benefit
 import com.levento.sfrapp.models.PlaceHolders
 import com.levento.sfrapp.ui.theme.SFRAPPTheme
@@ -37,7 +39,7 @@ import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 @Composable
 fun BenefitRow(
     benefits: List<Benefit>,
-    categoryImage: String? = null,
+    categoryImage: ImageResult? = null,
     onBenefitClick: (Benefit) -> Unit
 ) {
 
@@ -45,7 +47,7 @@ fun BenefitRow(
 
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(32.dp),
-        contentPadding = PaddingValues(start = 16.dp, end = 70.dp),
+        contentPadding = PaddingValues(start = 40.dp, end = 40.dp),
         state = lazyListState,
         flingBehavior = rememberSnapperFlingBehavior(lazyListState),
 
@@ -61,7 +63,7 @@ fun BenefitRow(
 @Composable
 fun BenefitCard(
     benefit: Benefit,
-    categoryImage: String? = null,
+    categoryImage: ImageResult? = null,
     onClick: (Benefit) -> Unit
 ) {
     Card(
@@ -75,12 +77,8 @@ fun BenefitCard(
         Box(
             modifier = Modifier.background(Color.White)
         ) {
-            Image(
-                painter = if (categoryImage != null) {
-                    rememberAsyncImagePainter(categoryImage)
-                } else {
-                    painterResource(id = PlaceHolders.categoryImage)
-                },
+            AsyncImage(
+                model = categoryImage?.drawable,
                 contentDescription = "",
                 modifier = Modifier
                     .height(74.dp)
@@ -93,8 +91,8 @@ fun BenefitCard(
                     .padding(top = 37.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Image(
-                    painter = rememberAsyncImagePainter(benefit.imageURL),
+                AsyncImage(
+                    model = benefit.image?.drawable,
                     contentDescription = "",
                     modifier = Modifier
                         .height(64.dp)
