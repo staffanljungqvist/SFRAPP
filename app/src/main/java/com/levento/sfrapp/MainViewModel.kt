@@ -3,11 +3,9 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import coil.ImageLoader
 import coil.imageLoader
 import coil.request.ImageRequest
 import coil.request.ImageResult
-import coil.size.ViewSizeResolver
 import com.levento.sfrapp.SFRAPP
 import com.levento.sfrapp.models.Article
 import com.levento.sfrapp.models.Benefit
@@ -21,13 +19,14 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _isLoading = MutableStateFlow(true)
-    val isLoading: StateFlow<Boolean> = _isLoading
-
     private val newsRepository = getApplication<SFRAPP>().newsRepository
     private val benefitsRepository = getApplication<SFRAPP>().benefitRepository
+    private val imageLoader = getApplication<SFRAPP>().imageLoader
 
     private var allBenefits = listOf<Benefit>()
+
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> = _isLoading
 
     private val _articles = mutableStateOf(listOf<Article>())
     val articles = _articles
@@ -44,24 +43,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val _currentBenefit = mutableStateOf(Benefit())
     val currentBenefit = _currentBenefit
 
-    private val imageLoader = getApplication<SFRAPP>().imageLoader
-
 
     //Funktioner som körs när appen startar.
     fun load() {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.value = true
             getNews()
-            Log.d("initload", "Nyheter hämtade")
             getBenefits()
-            Log.d("initload", "förmåner hämtade")
-            _isLoading.value = false
             loadAllImages(allBenefits, _populatedCategories.value)
-            Log.d("initload", "bilder laddade")
+            _isLoading.value = false
 
         }
     }
-
 
     //Hämtar och publicerar en lista med artiklar
     private suspend fun getNews() {
@@ -113,7 +106,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         benefitList: List<Benefit>
     ): List<BenefitCategory> {
 
-        val cateryListPopulated: MutableList<BenefitCategory> = categoryList.toMutableList()
+        val categoryListPopulated: MutableList<BenefitCategory> = categoryList.toMutableList()
 
         for (category in categoryList) {
             for (benefit in benefitList) {
@@ -124,7 +117,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
         }
-        return cateryListPopulated
+        return categoryListPopulated
     }
 
     fun setCurrentArticle(article: Article) {
@@ -162,8 +155,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             .data(imageUrl)
             // Optional, but setting a ViewSizeResolver will conserve memory by limiting the size the image should be preloaded into memory at.
             .build()
-        val image = imageLoader.execute(request)
-        return image
+        return imageLoader.execute(request)
     }
 
 }

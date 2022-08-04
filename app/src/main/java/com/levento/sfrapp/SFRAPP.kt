@@ -16,5 +16,4 @@ class SFRAPP : Application(), ImageLoaderFactory {
             .crossfade(true)
             .build()
     }
-
 }

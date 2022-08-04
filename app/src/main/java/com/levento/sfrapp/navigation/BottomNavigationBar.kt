@@ -1,8 +1,12 @@
 package com.levento.sfrapp.navigation
 
 import android.content.Intent
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -16,7 +20,9 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.levento.sfrapp.CardActivity
-import com.levento.sfrapp.ui.theme.*
+import com.levento.sfrapp.ui.theme.BottomBackgroundCOlor
+import com.levento.sfrapp.ui.theme.selectedColor
+import com.levento.sfrapp.ui.theme.unselectedColor
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
@@ -25,17 +31,15 @@ fun BottomNavigationBar(navController: NavController) {
         backgroundColor = BottomBackgroundCOlor,
         modifier = Modifier.height(60.dp)
 
-        ) {
+    ) {
         val backStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = backStackEntry?.destination?.route
-
         val context = LocalContext.current
 
         NavBarItems.BarItems.forEach { navItem ->
 
             val selected = currentRoute == navItem.route
             val cardItem = navItem.title == "Kort"
-
 
             BottomNavigationItem(
                 selected = selected,
@@ -74,7 +78,6 @@ fun BottomNavigationBar(navController: NavController) {
                     {
                         Text(
                             text = navItem.title,
-                          //  fontSize = 14.sp,
                             color = if (selected) selectedColor else unselectedColor,
                             modifier = Modifier
                                 .padding(vertical = 5.dp)

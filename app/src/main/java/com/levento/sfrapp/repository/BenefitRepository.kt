@@ -9,7 +9,6 @@ import com.levento.sfrapp.models.BenefitCategory
 import com.levento.sfrapp.models.DataOrException
 import kotlinx.coroutines.tasks.await
 
-
 class BenefitsRepository {
 
     suspend fun getAllBenefitsFromFirestore(): DataOrException<List<Benefit>, Exception> {
@@ -17,36 +16,18 @@ class BenefitsRepository {
         Log.d(TAG, "Försöker hämta förmåner från firebase")
         try {
             val benefitList = mutableListOf<Benefit>()
-                val documentSnap = FirebaseFirestore.getInstance().collection("benefits").get().await()
-                    for (document in documentSnap) {
-                        val tempBenefit = document.toObject(Benefit::class.java)
-                        tempBenefit.id = document.id
-                        benefitList.add(tempBenefit)
-                    }
+            val documentSnap = FirebaseFirestore.getInstance().collection("benefits").get().await()
+            for (document in documentSnap) {
+                val tempBenefit = document.toObject(Benefit::class.java)
+                tempBenefit.id = document.id
+                benefitList.add(tempBenefit)
+            }
             dataOrException.data = benefitList
         } catch (e: FirebaseFirestoreException) {
             dataOrException.e = e
             Log.d(TAG, "Kunde inte hämta förmåner, " + e.message)
         }
         return dataOrException
-    }
-
-    suspend fun getBenefitFromFirestore(fUid: String): Benefit? {
-
-        var benefit: Benefit? = Benefit()
-
-        Log.d(TAG, "Försöker hämta förmåner från firebase")
-        try {
-            val data = FirebaseFirestore.getInstance().collection("benefits").document(fUid).get().await()
-
-            benefit = data.toObject(Benefit::class.java)
-
-            Log.d("parser", "Den nerladdade förmånen är: " + benefit?.title)
-
-        } catch (e: FirebaseFirestoreException) {
-            Log.d(TAG, "Kunde inte hämta förmåner, " + e.message)
-        }
-        return benefit
     }
 
     suspend fun getCategoriesFromFirestore(): DataOrException<List<BenefitCategory>, Exception> {

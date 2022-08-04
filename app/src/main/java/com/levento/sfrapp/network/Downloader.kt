@@ -7,7 +7,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.BufferedInputStream
 import java.io.InputStream
-import java.lang.Exception
 import java.net.HttpURLConnection
 
 class Downloader(var urlAddress: String = "https://smaforetagarna.se/nyheter/feed/") {

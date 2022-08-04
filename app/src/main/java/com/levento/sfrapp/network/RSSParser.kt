@@ -38,17 +38,17 @@ class RSSParser(val inputStream: InputStream) {
                                 article.title = tagValue
                             } else if (tagName.equals("description", ignoreCase = true)) {
                                 val desc = tagValue
-                                article.description = desc!!.substring(desc.indexOf("/>") + 1, endIndex = desc.indexOf("<p class"))
+                                article.description = desc!!.substring(
+                                    desc.indexOf("/>") + 1,
+                                    endIndex = desc.indexOf("<p class")
+                                )
                             } else if (tagName.equals("pubDate", ignoreCase = true)) {
                                 article.date = tagValue
-                            }
-                            else if (tagName.equals("media:thumbnail", ignoreCase = true)) {
+                            } else if (tagName.equals("media:thumbnail", ignoreCase = true)) {
                                 article.imageUrl = parser.getAttributeValue(0)
-                            }
-                            else if (tagName.equals("link", ignoreCase = true)) {
+                            } else if (tagName.equals("link", ignoreCase = true)) {
                                 article.link = tagValue
-                            }
-                            else if (tagName.equals("content:encoded", ignoreCase = true)) {
+                            } else if (tagName.equals("content:encoded", ignoreCase = true)) {
                                 article.content = tagValue
                             }
                         }

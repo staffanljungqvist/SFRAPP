@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
 
 class ImageGetter(
     private val htmlTextView: TextView,
-    val context : Context
+    val context: Context
 ) : Html.ImageGetter {
 
     // Function needs to overridden when extending [Html.ImageGetter] ,

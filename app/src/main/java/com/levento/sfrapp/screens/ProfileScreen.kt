@@ -16,8 +16,9 @@ import com.levento.sfrapp.models.UserCompany
 
 @Composable
 fun ProfileScreen(company: UserCompany) {
-    Box(modifier = Modifier
-        .fillMaxSize()
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
     ) {
         Column(modifier = Modifier.padding(64.dp)) {
             ProfileInfoText(header = "Medlemsnummer", text = company.memberId)
@@ -35,7 +36,11 @@ fun ProfileScreen(company: UserCompany) {
 @Composable
 fun ProfileInfoText(header: String, text: String) {
     Text(text = header, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.body1)
-    Text(text = text, style = MaterialTheme.typography.body1, modifier = Modifier.padding(bottom = 8.dp))
+    Text(
+        text = text,
+        style = MaterialTheme.typography.body1,
+        modifier = Modifier.padding(bottom = 8.dp)
+    )
 }
 
 @Preview

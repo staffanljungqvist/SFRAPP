@@ -71,9 +71,8 @@ fun NewsCard(article: Article, onArticleClick: (Article) -> Unit) {
                 .background(Color.White)
         ) {
 
-
-
             ArticleThumbnail(article.imageUrl)
+
             Text(
                 text = article.title ?: "Missing headline",
                 style = MaterialTheme.typography.h4,
@@ -85,27 +84,31 @@ fun NewsCard(article: Article, onArticleClick: (Article) -> Unit) {
                 //      .weight(1.0f)
             )
 
-            Row(                    modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 30.dp)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 30.dp)
+            ) {
                 Text(
                     text = "17-05-2022",
                     style = MaterialTheme.typography.caption,
                     color = gray800
                 )
 
-                Text("Kategori", modifier = Modifier.padding(start = 30.dp, end = 30.dp, bottom = 4.dp))
+                Text(
+                    "Kategori",
+                    modifier = Modifier.padding(start = 30.dp, end = 30.dp, bottom = 4.dp)
+                )
             }
 
         }
     }
-
 }
 
 @Composable
 fun ArticleThumbnail(image: String?) {
     AsyncImage(
-        model = image ?: null,
+        model = image,
         contentDescription = null,
         modifier = Modifier
             //       .clip(shapes.small),
@@ -114,7 +117,6 @@ fun ArticleThumbnail(image: String?) {
         contentScale = ContentScale.FillWidth,
         placeholder = painterResource(id = R.drawable.placeholder_img),
         error = painterResource(id = R.drawable.placeholder_img)
-
     )
 }
 

@@ -17,7 +17,7 @@ class BenefitEntity {
     var benefitName: String = ""
 
 
-    constructor(){}
+    constructor() {}
 
     constructor(id: Int, benefitName: String) {
         this.id = id

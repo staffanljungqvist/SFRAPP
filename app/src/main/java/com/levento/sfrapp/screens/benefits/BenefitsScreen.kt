@@ -15,7 +15,6 @@ import com.levento.sfrapp.R
 import com.levento.sfrapp.models.Benefit
 import com.levento.sfrapp.models.BenefitCategory
 import com.levento.sfrapp.screens.screencomponents.BenefitRow
-import com.levento.sfrapp.screens.screencomponents.ContentList
 import com.levento.sfrapp.ui.theme.SFRAPPTheme
 
 @Composable
@@ -23,8 +22,8 @@ fun BenefitsScreen(
     categoryList: List<BenefitCategory>,
     onBenefitClick: (Benefit) -> Unit
 ) {
-
     SFRAPPTheme() {
+
         Box {
             Image(
                 painter = painterResource(id = R.drawable.test_bakgrund),
@@ -35,13 +34,12 @@ fun BenefitsScreen(
             LazyColumn(contentPadding = PaddingValues(bottom = 100.dp, top = 15.dp)) {
                 items(categoryList) { category ->
                     if (category.benefits.isNotEmpty()) {
-                        ContentList(header = category.title!!) {
-                            BenefitRow(
-                                benefits = category.benefits,
-                                categoryImage = category.image,
-                                onBenefitClick = onBenefitClick
-                            )
-                        }
+                        BenefitRow(
+                            category.title!!,
+                            benefits = category.benefits,
+                            categoryImage = category.image,
+                            onBenefitClick = onBenefitClick
+                        )
                     }
                 }
             }

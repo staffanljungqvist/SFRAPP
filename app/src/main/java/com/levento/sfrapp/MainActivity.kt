@@ -8,15 +8,16 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -41,7 +42,6 @@ class MainActivity : ComponentActivity() {
 
         viewModel.load()
 
-
         setContent {
 
             val isLoading by viewModel.isLoading.collectAsState()
@@ -61,7 +61,6 @@ class MainActivity : ComponentActivity() {
 fun MainScreen(viewModel: MainViewModel) {
 
     val navController = rememberNavController()
-
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
 
@@ -70,7 +69,10 @@ fun MainScreen(viewModel: MainViewModel) {
         content = {
             Box() {
 
-                Image(painter = painterResource(id = R.drawable.test_bakgrund), contentDescription = null)
+                Image(
+                    painter = painterResource(id = R.drawable.test_bakgrund),
+                    contentDescription = null
+                )
 
                 NavigationHost(
                     navController = navController,
@@ -92,7 +94,6 @@ fun NavigationHost(
 
     val newsArticles by remember { viewModel.articles }
     val exclusiveBenefits by remember { viewModel.exclusiveBenefits }
-
     val currentArticle by remember { viewModel.currentArticle }
     val currentBenefit by remember { viewModel.currentBenefit }
     val categoryList by remember { viewModel.populatedCategories }
@@ -110,7 +111,6 @@ fun NavigationHost(
             launchSingleTop
         }
     }
-
 
     NavHost(navController = navController, startDestination = NavRoutes.Home.route) {
         composable(NavRoutes.Home.route) {
@@ -155,7 +155,7 @@ fun AppPreview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
         ) {
-               MainScreen(viewModel = MainViewModel(SFRAPP()))
+            MainScreen(viewModel = MainViewModel(SFRAPP()))
         }
     }
 }
