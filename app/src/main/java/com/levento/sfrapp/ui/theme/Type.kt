@@ -40,10 +40,10 @@ val typography = Typography(
 
     h1 = TextStyle(
         fontFamily = fontFamilyMontsserat,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.SemiBold,
         fontSize = 18.sp,
         letterSpacing = (1.25).sp,
-       //   color = Color.White
+          color = brown
     ),
     h2 = TextStyle(
         fontFamily = fontFamilySourceSansPro,
@@ -60,7 +60,7 @@ val typography = Typography(
     h4 = TextStyle(
         fontFamily = fontFamilyMontsserat,
         fontWeight = FontWeight.Bold,
-        fontSize = 14.sp,
+        fontSize = 13.sp,
         letterSpacing = (0.5).sp
     ),
     body1 = TextStyle(

@@ -16,7 +16,7 @@ fun ContentList(header: String, content: @Composable () -> Unit) {
         Text(
             text = header.uppercase(),
             style = MaterialTheme.typography.h1,
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(start = 16.dp, bottom = 16.dp),
         )
         content()
         Spacer(modifier = Modifier.padding(bottom = 28.dp))

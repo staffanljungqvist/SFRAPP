@@ -28,7 +28,7 @@ fun InfoScreen() {
 
 @Composable
 fun InfoMeny() {
-    Column(modifier = Modifier.padding(64.dp)) {
+    Column(modifier = Modifier.padding(40.dp)) {
         InfoItem(icon = R.drawable.ic_baseline_groups_24, text = "Om oss")
         InfoItem(icon = R.drawable.ic_baseline_email_24, text = "Kontakta oss")
         InfoItem(icon = R.drawable.ic_baseline_lock_24, text = "GDPR")

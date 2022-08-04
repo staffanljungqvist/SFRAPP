@@ -70,25 +70,25 @@ fun BenefitCard(
         elevation = 5.dp,
         shape = RoundedCornerShape(15.dp),
         modifier = Modifier
-            .height(200.dp)
-            .width(250.dp),
+            .height(150.dp)
+            .width(200.dp),
         onClick = { onClick(benefit) }
         ) {
         Box(
             modifier = Modifier.background(Color.White)
         ) {
-            AsyncImage(
+/*            AsyncImage(
                 model = categoryImage?.drawable,
                 contentDescription = "",
                 modifier = Modifier
                     .height(74.dp)
                     .width(250.dp),
-                contentScale = ContentScale.Crop
-            )
+                contentScale = ContentScale.Fit
+            )*/
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 37.dp),
+                    .padding(top = 10.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 AsyncImage(
@@ -139,7 +139,7 @@ fun OfferPreview() {
 }
 
 
-@Preview(heightDp = 100, widthDp = 250)
+@Preview(showBackground = true)
 @Composable
 fun benefitRowPreview() {
     SFRAPPTheme() {

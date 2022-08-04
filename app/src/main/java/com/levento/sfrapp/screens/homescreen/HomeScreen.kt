@@ -1,9 +1,12 @@
 package com.levento.sfrapp.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -16,8 +19,8 @@ import com.levento.sfrapp.screens.screencomponents.BenefitRow
 import com.levento.sfrapp.screens.screencomponents.ContentList
 import com.levento.sfrapp.screens.screencomponents.NewsRow
 import com.levento.sfrapp.models.PlaceHolders
-import com.levento.sfrapp.ui.theme.SFRAPPTheme
 import com.levento.sfrapp.R
+import com.levento.sfrapp.ui.theme.*
 
 
 @Composable
@@ -43,12 +46,19 @@ fun HomeScreen(
                     //    .background(backgroundColor)
                     .fillMaxHeight()
                     .verticalScroll(rememberScrollState())
-                    .padding(top = 20.dp)
             ) {
 
-                ContentList("Nyheter") {
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    text = "NYHETER",
+                    style = MaterialTheme.typography.h1,
+                    color = brown,
+                    modifier = Modifier.padding(start = 16.dp, bottom = 5.dp, top = 15.dp)
+                )
+            }
                     NewsRow(newsArticles, onArticleClick)
-                }
+
+                    Spacer(Modifier.height(30.dp))
 
                 ContentList(header = "Aktuella förmåner") {
                     BenefitRow(
