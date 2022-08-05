@@ -28,6 +28,7 @@ import com.levento.sfrapp.models.Benefit
 import com.levento.sfrapp.models.PlaceHolders
 import com.levento.sfrapp.ui.theme.SFRAPPTheme
 import com.levento.sfrapp.ui.theme.brown
+import com.levento.sfrapp.ui.theme.red
 import dev.chrisbanes.snapper.ExperimentalSnapperApi
 import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 
@@ -140,7 +141,7 @@ fun Offer(offerTitle: String, offerSubTitle: String) {
         Text(
             text = offerSubTitle.uppercase(),
             fontWeight = FontWeight.SemiBold,
-            color = brown,
+            color = red,
             textAlign = TextAlign.Center
         )
     }

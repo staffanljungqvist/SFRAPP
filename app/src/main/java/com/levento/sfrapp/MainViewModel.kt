@@ -49,9 +49,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.value = true
             getNews()
+            _isLoading.value = false
             getBenefits()
             loadAllImages(allBenefits, _populatedCategories.value)
-            _isLoading.value = false
+
 
         }
     }

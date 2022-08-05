@@ -18,6 +18,6 @@ val brown = Color(0xFF936517)
 val dark = Color(0xFF0D2C43)
 val lightGray = Color(0xFFF0F2F9)
 val screenBackgroundColor = lightGray
-val BottomBackgroundCOlor = Color.White
+val BottomBackgroundCOlor = dark
 val selectedColor = blueLight
-val unselectedColor = dark.copy(alpha = 0.8F)
+val unselectedColor = Color.White.copy(alpha = 0.8f)

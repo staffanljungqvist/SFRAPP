@@ -1,10 +1,7 @@
 package com.levento.sfrapp.navigation
 
 import android.content.Intent
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -15,6 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -29,7 +27,7 @@ fun BottomNavigationBar(navController: NavController) {
 
     CustomBottomNavigation(
         backgroundColor = BottomBackgroundCOlor,
-        modifier = Modifier.height(60.dp)
+        modifier = Modifier.height(70.dp)
 
     ) {
         val backStackEntry by navController.currentBackStackEntryAsState()
@@ -69,8 +67,8 @@ fun BottomNavigationBar(navController: NavController) {
                             contentDescription = "card icon",
                             tint = if (selected) selectedColor else unselectedColor,
                             modifier = Modifier
-                                .padding(vertical = 2.dp)
-                                .size(25.dp),
+                                .padding(vertical = 4.dp)
+                                .size(30.dp),
                         )
                     }
                 },
@@ -79,8 +77,9 @@ fun BottomNavigationBar(navController: NavController) {
                         Text(
                             text = navItem.title,
                             color = if (selected) selectedColor else unselectedColor,
+                            fontSize = 12.sp,
                             modifier = Modifier
-                                .padding(vertical = 5.dp)
+                                .padding(vertical = 7.dp)
                         )
                     }
                 } else null,

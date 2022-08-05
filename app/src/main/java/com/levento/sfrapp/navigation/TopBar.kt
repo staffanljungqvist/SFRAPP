@@ -2,7 +2,10 @@ package com.levento.sfrapp.navigation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
@@ -25,7 +28,7 @@ fun TopBar(
         "benefits" -> "Förmåner"
         "profile" -> "Din sida"
         "info" -> "Information"
-        else -> ""
+        else -> "Placeholder"
     }
 
     Box(
@@ -36,15 +39,22 @@ fun TopBar(
                 Text(pageName, color = Color.White)
             },
             backgroundColor = dark,
-            modifier = Modifier.padding(top = 30.dp),
-            navigationIcon = {
-                Image(
-                    painter = painterResource(id = R.drawable.bee),
-                    contentDescription = null,
-                    modifier = Modifier.padding(5.dp)
-                )
-            }
         )
+
+        Box(contentAlignment = Alignment.Center, modifier = Modifier.offset(y = 20.dp)) {
+            Icon(
+                painter = painterResource(id = R.drawable.bee),
+                contentDescription = null,
+                tint = Color.White,
+                modifier = Modifier.size(55.dp)
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.bee),
+                contentDescription = null,
+                modifier = Modifier.size(45.dp)
+            )
+        }
     }
 }
 
