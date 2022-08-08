@@ -1,35 +1,46 @@
 package com.levento.sfrapp.screens
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.levento.sfrapp.models.PlaceHolders
-import com.levento.sfrapp.models.UserCompany
+import com.levento.sfrapp.data.PlaceHolders
+import com.levento.sfrapp.models.User
+import com.levento.sfrapp.ui.theme.blue
+
 
 @Composable
-fun ProfileScreen(company: UserCompany) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        Column(modifier = Modifier.padding(64.dp)) {
-            ProfileInfoText(header = "Medlemsnummer", text = company.memberId)
-            ProfileInfoText(header = "Företagsnamn", text = company.companyName)
-            ProfileInfoText(header = "Org.nr", text = company.orgNr)
-            ProfileInfoText(header = "Ort", text = company.locality)
-            ProfileInfoText(header = "Address", text = company.address)
-            ProfileInfoText(header = "Tel.nr", text = company.phone)
-            ProfileInfoText(header = "Kontaktperson", text = company.contact)
-            ProfileInfoText(header = "Medlemskap giltig t.om.", text = company.validThru)
-        }
+fun ProfileScreen(user: User, onLogout: () -> Unit) {
+    
+    Column(Modifier.fillMaxSize().padding(start = 32.dp, top = 32.dp)) {
+        UserInfoList(user = user)
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+            Text(text = "Logga ut", modifier = Modifier.clickable { onLogout() }, color = blue)
+
+    }
+    
+}
+
+@Composable
+fun UserInfoList(user: User, modifier: Modifier = Modifier) {
+    Column(modifier = modifier) {
+        ProfileInfoText(header = "Medlemsnummer", text = user.memberId ?: "Missing data")
+        ProfileInfoText(header = "Företagsnamn", text = user.companyName ?: "Missing data")
+        ProfileInfoText(header = "Org.nr", text = user.orgNr ?: "Missing data")
+        ProfileInfoText(header = "Ort", text = user.locality ?: "Missing data")
+        ProfileInfoText(header = "Address", text = user.address ?: "Missing data")
+        ProfileInfoText(header = "Tel.nr", text = user.phone ?: "Missing data")
+        ProfileInfoText(header = "Kontaktperson", text = user.contactPerson ?: "Missing data")
+        ProfileInfoText(header = "Medlemskap giltig t.om.", text = user.validThru ?: "Missing data")
     }
 }
 
@@ -43,8 +54,8 @@ fun ProfileInfoText(header: String, text: String) {
     )
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun UserScreenPreview() {
-    ProfileScreen(company = PlaceHolders.userCompany)
+    ProfileScreen(user = PlaceHolders.userCompany, onLogout = {})
 }

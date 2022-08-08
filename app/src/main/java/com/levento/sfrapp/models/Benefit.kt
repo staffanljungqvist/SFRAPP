@@ -1,6 +1,7 @@
 package com.levento.sfrapp.models
 
 import coil.request.ImageResult
+import com.levento.sfrapp.data.PlaceHolders
 
 data class Benefit(
     var id: String = PlaceHolders.id.toString(),

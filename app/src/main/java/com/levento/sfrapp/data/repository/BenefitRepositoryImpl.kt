@@ -1,17 +1,18 @@
-package com.levento.sfrapp.repository
+package com.levento.sfrapp.data.repository
 
 import TAG
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.levento.sfrapp.interfaces.iBenefitRepository
 import com.levento.sfrapp.models.Benefit
 import com.levento.sfrapp.models.BenefitCategory
 import com.levento.sfrapp.models.DataOrException
 import kotlinx.coroutines.tasks.await
 
-class BenefitsRepository {
+class BenefitsRepositoryImpl: iBenefitRepository {
 
-    suspend fun getAllBenefitsFromFirestore(): DataOrException<List<Benefit>, Exception> {
+    override suspend fun getBenefits(): DataOrException<List<Benefit>, Exception> {
         val dataOrException = DataOrException<List<Benefit>, Exception>()
         Log.d(TAG, "Försöker hämta förmåner från firebase")
         try {
@@ -30,7 +31,7 @@ class BenefitsRepository {
         return dataOrException
     }
 
-    suspend fun getCategoriesFromFirestore(): DataOrException<List<BenefitCategory>, Exception> {
+    override suspend fun getCategories(): DataOrException<List<BenefitCategory>, Exception> {
         val dataOrException = DataOrException<List<BenefitCategory>, Exception>()
         try {
             dataOrException.data =

@@ -1,4 +1,4 @@
-package com.levento.sfrapp.navigation
+package com.levento.sfrapp.models
 
 data class BarItem(
     val title: String,

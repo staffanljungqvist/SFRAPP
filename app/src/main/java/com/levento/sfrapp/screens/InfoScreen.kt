@@ -14,9 +14,10 @@ import com.levento.sfrapp.R
 
 @Composable
 fun InfoScreen() {
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(start = 32.dp, top = 32.dp)
     ) {
         InfoMeny()
     }
@@ -24,7 +25,7 @@ fun InfoScreen() {
 
 @Composable
 fun InfoMeny() {
-    Column(modifier = Modifier.padding(40.dp)) {
+    Column() {
         InfoItem(icon = R.drawable.ic_baseline_groups_24, text = "Om oss")
         InfoItem(icon = R.drawable.ic_baseline_email_24, text = "Kontakta oss")
         InfoItem(icon = R.drawable.ic_baseline_lock_24, text = "GDPR")

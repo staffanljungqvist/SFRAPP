@@ -1,4 +1,4 @@
-package com.levento.sfrapp.helpers
+package com.levento.sfrapp.utils
 
 import android.content.Context
 import android.content.res.Resources

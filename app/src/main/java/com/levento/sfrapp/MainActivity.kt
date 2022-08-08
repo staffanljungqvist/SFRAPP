@@ -30,7 +30,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.levento.sfrapp.models.Article
 import com.levento.sfrapp.models.Benefit
-import com.levento.sfrapp.models.PlaceHolders
 import com.levento.sfrapp.navigation.BottomNavigationBar
 import com.levento.sfrapp.navigation.NavRoutes
 import com.levento.sfrapp.navigation.TopBar
@@ -69,6 +68,8 @@ fun MainScreen(viewModel: MainViewModel) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
 
+    val loggedIn by remember { viewModel.isLoggedIn }
+
     Scaffold(
         topBar = { TopBar(currentRoute) },
         content = {
@@ -76,7 +77,9 @@ fun MainScreen(viewModel: MainViewModel) {
                 Image(
                     painter = painterResource(id = R.drawable.screen_background),
                     contentDescription = null,
-                    modifier = Modifier.fillMaxHeight().padding(bottom = 70.dp),
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .padding(bottom = 70.dp),
                     contentScale = ContentScale.FillHeight
                 )
 
@@ -87,7 +90,7 @@ fun MainScreen(viewModel: MainViewModel) {
             }
         },
         bottomBar = {
-            BottomNavigationBar(navController = navController)
+            BottomNavigationBar(navController = navController, loggedIn = loggedIn)
         }
     )
 }
@@ -104,16 +107,30 @@ fun NavigationHost(
     val currentBenefit by remember { viewModel.currentBenefit }
     val categoryList by remember { viewModel.populatedCategories }
 
+    val isLoggedIn by remember { viewModel.isLoggedIn }
+    val currentUser by remember { viewModel.user }
+
+    val onLoginButtonClick: (String?, String?) -> Unit = { email, password ->
+        viewModel.login(email, password)
+        if (isLoggedIn) navController.navigate(NavRoutes.Home.route) {
+            launchSingleTop
+        }
+    }
+
+    val onLogoutButtonClick:() -> Unit = {
+            viewModel.logOut()
+    }
+
     val onBenefitClick: (Benefit) -> Unit = { benefit ->
         viewModel.setCurrentBenefit(benefit)
-        navController.navigate(NavRoutes.BenefitDetailScreen.route) {
+        navController.navigate(NavRoutes.BenefitDetail.route) {
             launchSingleTop
         }
     }
 
     val onArticleClick: (Article) -> Unit = { article ->
         viewModel.setCurrentArticle(article)
-        navController.navigate(NavRoutes.ArticleDetailScreen.route) {
+        navController.navigate(NavRoutes.ArticleDetail.route) {
             launchSingleTop
         }
     }
@@ -128,11 +145,11 @@ fun NavigationHost(
             )
         }
 
-        composable(NavRoutes.ArticleDetailScreen.route) { backStackEntry ->
+        composable(NavRoutes.ArticleDetail.route) { backStackEntry ->
             ArticleDetailScreen(currentArticle)
         }
 
-        composable(NavRoutes.BenefitDetailScreen.route) { backStackEntry ->
+        composable(NavRoutes.BenefitDetail.route) { backStackEntry ->
             BenefitDetailScreen(currentBenefit)
         }
 
@@ -145,11 +162,16 @@ fun NavigationHost(
         }
 
         composable(NavRoutes.Profile.route) {
-            ProfileScreen(PlaceHolders.userCompany)
+            ProfileScreen(currentUser, onLogoutButtonClick)
         }
         composable(NavRoutes.Info.route) {
             InfoScreen()
         }
+
+        composable(NavRoutes.Login.route) {
+            LoginScreen(onLoginButtonClick = onLoginButtonClick)
+        }
+
     }
 }
 

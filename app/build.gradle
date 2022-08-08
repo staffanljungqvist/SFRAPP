@@ -86,6 +86,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:24.1.2'
     implementation 'com.google.firebase:firebase-firestore-ktx'
 
+    //Firebase Authorization
     implementation 'com.google.firebase:firebase-auth:19.2.0'
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.0'
@@ -104,5 +105,4 @@ dependencies {
 
     //Image receiver used for images in parsed html
     implementation 'com.squareup.picasso:picasso:2.71828'
-
 }

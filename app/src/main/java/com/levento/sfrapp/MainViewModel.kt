@@ -3,14 +3,13 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import coil.imageLoader
-import coil.request.ImageRequest
-import coil.request.ImageResult
 import com.levento.sfrapp.SFRAPP
+import com.levento.sfrapp.data.PlaceHolders
 import com.levento.sfrapp.models.Article
 import com.levento.sfrapp.models.Benefit
 import com.levento.sfrapp.models.BenefitCategory
-import com.levento.sfrapp.models.PlaceHolders
+import com.levento.sfrapp.models.User
+import com.levento.sfrapp.utils.ImageLoadHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,12 +20,20 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val newsRepository = getApplication<SFRAPP>().newsRepository
     private val benefitsRepository = getApplication<SFRAPP>().benefitRepository
-    private val imageLoader = getApplication<SFRAPP>().imageLoader
+    private val userRepository = getApplication<SFRAPP>().userRepository
+    private val imageLoadHelper = ImageLoadHelper(application)
+
 
     private var allBenefits = listOf<Benefit>()
 
+    private val _user = mutableStateOf(User())
+    val user = _user
+
     private val _isLoading = MutableStateFlow(true)
     val isLoading: StateFlow<Boolean> = _isLoading
+
+    private val _isLoggedIn = mutableStateOf(false)
+    val isLoggedIn = _isLoggedIn
 
     private val _articles = mutableStateOf(listOf<Article>())
     val articles = _articles
@@ -48,12 +55,57 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun load() {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.value = true
+
+            //Kollar om en användare är inloggad
+            checkLoginStatus()
+
+            //Hämtar nyheterna från ett RSS flöde
             getNews()
-            _isLoading.value = false
+
+            //Hämtar förmånerna från firebase. Delar även in dom i kategorier
             getBenefits()
-            loadAllImages(allBenefits, _populatedCategories.value)
 
+            //Laddar ner alla bilder som ska användas till minnet (Exlusive nyhetsbilder samt contentbilder)
+            imageLoadHelper.loadAllImages(allBenefits, _populatedCategories.value)
 
+            _isLoading.value = false
+        }
+    }
+
+    fun checkLoginStatus() {
+        viewModelScope.launch {
+            if (userRepository.checkLogin()) {
+                _isLoggedIn.value = true
+                getUserData()
+                Log.d(TAG, "Current user: " + user.value.companyName)
+            } else {
+                _isLoggedIn.value = false
+            }
+        }
+    }
+
+    fun login(email: String?, password: String?) {
+        if (validateEmailAndPassword(email, password)) {
+            viewModelScope.launch {
+                userRepository.loginUser(email!!, password!!)
+                checkLoginStatus()
+            }
+        }
+    }
+
+    private fun getUserData() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val user = userRepository.getUserData()
+            user?.let {
+                _user.value = it
+            }
+        }
+    }
+
+    fun logOut() {
+        viewModelScope.launch(Dispatchers.IO) {
+            userRepository.logOut()
+            checkLoginStatus()
         }
     }
 
@@ -62,21 +114,21 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         _articles.value = newsRepository.getNews()
     }
 
-    /*
-    Hämtar en lista med alla Benefits från repository. Hämtar sedan en lista med alla Category.
-    Dessa 2 listor skickas sedan till funktionen "fillCategoriesWithBenefits", som skickar tillbaka en
-    lista med Category-object, med vardera en lista med Benefit-objekt. Denna lista publiceras sedan till
-    state-variabeln categoriesSorted. En lista skapas och publiceras även för exclusiveBenefits, från funktionen
-    extractExclusiveBenefits
-     */
+    //Hämtar förmåner från firebase.
     private suspend fun getBenefits() {
         var populatedCategories = listOf<BenefitCategory>()
-        val benefitdata = benefitsRepository.getAllBenefitsFromFirestore()
-        val categorydata = benefitsRepository.getCategoriesFromFirestore()
+
+        //hämtar en lista med alla förmåner, samt en lista med alla möjliga kategorier.
+        val benefitdata = benefitsRepository.getBenefits()
+        val categorydata = benefitsRepository.getCategories()
 
         if (benefitdata.data != null && categorydata.data != null) {
             Log.d(TAG, "Received " + benefitdata.data?.size + " benefits from repository")
+
+            //
             allBenefits = benefitdata.data!!
+
+            //Skapar en lista av kategorier, där varje kategoriobjekt fylls med en lista av förmåner som tillhör den kategorin
             populatedCategories =
                 fillCategoriesWithBenefits(categorydata.data!!, benefitdata.data!!)
         } else {
@@ -84,15 +136,19 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             populatedCategories =
                 fillCategoriesWithBenefits(PlaceHolders.categories, PlaceHolders.benefits)
         }
+
+
         _populatedCategories.value = populatedCategories
+
+        //Hämtar ut endast "exclusive" kategorin ur listan med fyllda kategorier
         _exclusiveBenefits.value =
             extractExclusiveBenefits(populatedCategories) ?: listOf<Benefit>()
         Log.d(TAG, "Hämtade exklusiva förmåner: " + _exclusiveBenefits.value)
     }
 
-    /*
-    Söker igenom en medskickad lista med Category, Hittar elementet med Aktuella förmåner, som skickas tillbaka som en ny lista av benefits"
-     */
+
+    //Söker igenom en medskickad lista med kategorier,
+    // söker efter kategorin med namnet "Aktuella", och skickar tillbaka en lista med alla förmåner från den kategorin.
     fun extractExclusiveBenefits(categories: List<BenefitCategory>): List<Benefit>? {
         val exclusiveCategory = categories.firstOrNull { it.title!!.contains("Aktuella") }
         if (exclusiveCategory != null) {
@@ -102,6 +158,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return exclusiveCategory?.benefits
     }
 
+    //Tar emot en lista med förmåner, samt en lista med kategorier. Skickar tillbaka en lista med kategorier, där varje
+    // kategori-objekt har en lista med förmåner, som är kopplade till den kategorin.
     private fun fillCategoriesWithBenefits(
         categoryList: List<BenefitCategory>,
         benefitList: List<Benefit>
@@ -133,30 +191,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return "https://firebasestorage.googleapis.com/v0/b/sfr-app.appspot.com/o/affarsnatverka.jpeg?alt=media&token=0afa42de-1503-4e5f-a36a-88bba4c2fe9f"
     }
 
-    suspend fun loadAllImages(benefits: List<Benefit>, categories: List<BenefitCategory>) {
-
-        for (benefit in benefits) {
-            benefit.imageURL?.let {
-                benefit.image = loadImage(benefit.imageURL!!)
-            }
-        }
-
-        Log.d("initload", "loadAllImages är färdig med förmånerna")
-
-        for (category in categories) {
-            category.imageURL?.let {
-                category.image = loadImage(category.imageURL!!)
-            }
-        }
-        Log.d("initload", "loadAllImages är färdig med kategorierna")
-    }
-
-    suspend fun loadImage(imageUrl: String): ImageResult {
-        val request = ImageRequest.Builder(getApplication())
-            .data(imageUrl)
-            // Optional, but setting a ViewSizeResolver will conserve memory by limiting the size the image should be preloaded into memory at.
-            .build()
-        return imageLoader.execute(request)
+    private fun validateEmailAndPassword(email: String?, password: String?): Boolean {
+        val isValid =
+            email != null && email.isNotEmpty() && password != null && password.isNotEmpty()
+        Log.d(TAG, isValid.toString())
+        return isValid
     }
 
 }

@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.levento.sfrapp.helpers.ImageLoader
+import com.levento.sfrapp.utils.ImageLoadHelper
 
 @Composable
 fun HTMLContentView(htmlText: String, context: Context = LocalContext.current) {
@@ -30,7 +30,7 @@ fun HTMLContentView(htmlText: String, context: Context = LocalContext.current) {
                 }
             },
             update = {
-                ImageLoader().displayHtml(htmlText, context, it)
+                ImageLoadHelper(context).displayHtml(htmlText, it)
             }
         )
     }

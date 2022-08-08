@@ -3,6 +3,7 @@ package com.levento.sfrapp.network
 import TAG
 import android.util.Log
 import com.levento.sfrapp.models.Article
+import com.levento.sfrapp.utils.RSSParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.BufferedInputStream

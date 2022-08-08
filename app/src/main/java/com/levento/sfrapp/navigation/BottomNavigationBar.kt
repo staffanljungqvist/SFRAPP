@@ -18,12 +18,13 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.levento.sfrapp.CardActivity
+import com.levento.sfrapp.data.NavBarItems
 import com.levento.sfrapp.ui.theme.BottomBackgroundCOlor
 import com.levento.sfrapp.ui.theme.selectedColor
 import com.levento.sfrapp.ui.theme.unselectedColor
 
 @Composable
-fun BottomNavigationBar(navController: NavController) {
+fun BottomNavigationBar(navController: NavController, loggedIn: Boolean) {
 
     CustomBottomNavigation(
         backgroundColor = BottomBackgroundCOlor,
@@ -34,7 +35,9 @@ fun BottomNavigationBar(navController: NavController) {
         val currentRoute = backStackEntry?.destination?.route
         val context = LocalContext.current
 
-        NavBarItems.BarItems.forEach { navItem ->
+        val barItems = if (loggedIn) NavBarItems.BarItemsLoggedIn else NavBarItems.BarItemsLoggedOut
+
+        barItems.forEach { navItem ->
 
             val selected = currentRoute == navItem.route
             val cardItem = navItem.title == "Kort"
@@ -94,6 +97,6 @@ fun BottomNavigationBar(navController: NavController) {
 @Preview
 @Composable
 fun BottomNavigationBarPreview() {
-    BottomNavigationBar(navController = rememberNavController())
+    BottomNavigationBar(navController = rememberNavController(), true)
 }
 

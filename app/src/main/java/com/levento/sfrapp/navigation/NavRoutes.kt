@@ -6,6 +6,7 @@ sealed class NavRoutes(val route: String) {
     object Card : NavRoutes("card")
     object Profile : NavRoutes("profile")
     object Info : NavRoutes("info")
-    object BenefitDetailScreen : NavRoutes("benefitDetail")
-    object ArticleDetailScreen : NavRoutes("articleDetail")
+    object BenefitDetail : NavRoutes("benefitDetail")
+    object ArticleDetail : NavRoutes("articleDetail")
+    object Login: NavRoutes("login")
 }

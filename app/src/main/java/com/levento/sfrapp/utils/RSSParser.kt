@@ -1,4 +1,4 @@
-package com.levento.sfrapp.network
+package com.levento.sfrapp.utils
 
 import TAG
 import android.util.Log

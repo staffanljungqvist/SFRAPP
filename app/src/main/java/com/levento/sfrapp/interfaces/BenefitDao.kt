@@ -1,4 +1,4 @@
-package com.levento.sfrapp.database
+package com.levento.sfrapp.interfaces
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

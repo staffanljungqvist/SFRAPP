@@ -1,8 +1,7 @@
 package com.levento.sfrapp
 
 import MainViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.levento.sfrapp.repository.NewsRepository
+import com.levento.sfrapp.data.repository.NewsRepositoryImpl
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.junit.Test
@@ -22,7 +21,7 @@ class ExampleUnitTest {
 
     @Test
     fun getArticles() {
-        val newsRepository = NewsRepository()
+        val newsRepository = NewsRepositoryImpl()
 
         GlobalScope.launch {
             val result = newsRepository.getNews()

@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.levento.sfrapp.R
 import com.levento.sfrapp.models.Article
-import com.levento.sfrapp.models.PlaceHolders
+import com.levento.sfrapp.data.PlaceHolders
 import com.levento.sfrapp.ui.theme.gray800
 import com.levento.sfrapp.ui.theme.red
 import dev.chrisbanes.snapper.ExperimentalSnapperApi

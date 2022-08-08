@@ -1,19 +1,23 @@
-package com.levento.sfrapp.models
+package com.levento.sfrapp.data
 
 import com.levento.sfrapp.R
+import com.levento.sfrapp.models.Article
+import com.levento.sfrapp.models.Benefit
+import com.levento.sfrapp.models.BenefitCategory
+import com.levento.sfrapp.models.User
 
 object PlaceHolders {
     val categoryImage = R.drawable.fordon_kategori
     val newsArticleImage = R.drawable.mala1
 
-    val userCompany = UserCompany(
+    val userCompany = User(
         memberId = "123456789",
         companyName = "LV Creative Consultants AB",
         orgNr = "12345",
         locality = "Helsingborg",
         address = "HETCH AB, Redaregatan 48",
         phone = "0708 1234567",
-        contact = "Kalle Johansson",
+        contactPerson = "Kalle Johansson",
         validThru = "2023-03-12"
     )
 

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.levento.sfrapp.interfaces.BenefitDao
 import com.levento.sfrapp.models.BenefitEntity
 
 @Database(entities = [(BenefitEntity::class)], version = 1)
