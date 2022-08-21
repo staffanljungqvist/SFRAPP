@@ -12,6 +12,7 @@ data class Benefit(
     var imageURL: String? = null,
     var content: String? = "Text Saknas",
     var link: String? = "Länk Saknas",
+    var accessLink: String? = "https://www.google.com/",
     var category: MutableList<String>? = mutableListOf(),
     var image: ImageResult? = null
 )

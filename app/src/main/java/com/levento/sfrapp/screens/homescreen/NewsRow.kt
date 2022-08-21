@@ -13,6 +13,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -22,8 +24,7 @@ import coil.compose.AsyncImage
 import com.levento.sfrapp.R
 import com.levento.sfrapp.models.Article
 import com.levento.sfrapp.data.PlaceHolders
-import com.levento.sfrapp.ui.theme.gray800
-import com.levento.sfrapp.ui.theme.red
+import com.levento.sfrapp.ui.theme.*
 import dev.chrisbanes.snapper.ExperimentalSnapperApi
 import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 
@@ -58,61 +59,83 @@ fun NewsRow(articles: List<Article>, onArticleClick: (Article) -> Unit) {
 @Composable
 fun NewsCard(article: Article, onArticleClick: (Article) -> Unit) {
     Card(
-        elevation = 5.dp,
+        elevation = 1.dp,
         //   shape = RoundedCornerShape(15.dp),
         modifier = Modifier
             .fillMaxWidth(),
         onClick = { onArticleClick(article) }
     ) {
 
-        Column(
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.White)
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                         //   dark.copy(alpha = 0.7f),
+                            blue.copy(alpha = 0.1f),
+                            Color.White,
+                            Color.White,
+                            Color.White
+                        )
+                    )
+                )
         ) {
-
-            ArticleThumbnail(article.imageUrl)
-
-            Text(
-                text = article.title ?: "Missing headline",
-                style = MaterialTheme.typography.h4,
-                color = red,
-                maxLines = 3,
-                modifier = Modifier
-                    .height(60.dp)
-                    .padding(start = 30.dp, end = 30.dp, top = 10.dp, bottom = 4.dp)
-                //      .weight(1.0f)
-            )
-
-            Row(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 30.dp)
+
             ) {
-                Text(
-                    text = "17-05-2022",
-                    style = MaterialTheme.typography.caption,
-                    color = gray800
+
+
+
+                ArticleThumbnail(article.imageUrl, modifier = Modifier
+                    .padding(start = 30.dp, end = 30.dp, top = 20.dp)
+                    .clip(Shapes.small)
                 )
 
                 Text(
-                    "Kategori",
-                    modifier = Modifier.padding(start = 30.dp, end = 30.dp, bottom = 4.dp)
+                    text = article.title ?: "Missing headline",
+                    style = MaterialTheme.typography.h4,
+                    color = red,
+                    maxLines = 3,
+                    modifier = Modifier
+                        .height(60.dp)
+                        .padding(start = 30.dp, end = 30.dp, top = 10.dp, bottom = 4.dp)
+                    //      .weight(1.0f)
                 )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 30.dp, bottom = 10.dp)
+                ) {
+                    Text(
+                        text = "17-05-2022",
+                       // style = MaterialTheme.typography.caption,
+                        color = gray800
+                    )
+
+                    Text(
+                        "Kategori",
+                        modifier = Modifier.padding(start = 30.dp, end = 30.dp, bottom = 4.dp)
+                    )
+                }
+
             }
-
         }
+
+
+
+
     }
 }
 
 @Composable
-fun ArticleThumbnail(image: String?) {
+fun ArticleThumbnail(image: String?, modifier: Modifier = Modifier) {
     AsyncImage(
         model = image,
         contentDescription = null,
-        modifier = Modifier
-            //       .clip(shapes.small),
-            .padding(start = 30.dp, end = 30.dp, top = 5.dp)
+        modifier = modifier
             .fillMaxSize(),
         contentScale = ContentScale.FillWidth,
         placeholder = painterResource(id = R.drawable.placeholder_img),
@@ -122,6 +145,6 @@ fun ArticleThumbnail(image: String?) {
 
 @Preview
 @Composable
-fun ArticleThumbnailPreview() {
-    NewsRow(articles = PlaceHolders.newsList, onArticleClick = {})
+fun ArticlePreview() {
+    //NewsCard(article = PlaceHolders.newsList[0], onArticleClick = {})
 }

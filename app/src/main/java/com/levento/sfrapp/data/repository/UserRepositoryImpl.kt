@@ -1,31 +1,52 @@
 package com.levento.sfrapp.data.repository
 
-import com.google.firebase.auth.AuthResult
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.ktx.Firebase
-import com.levento.sfrapp.interfaces.iUserRepository
+import com.levento.sfrapp.TAG
+import com.levento.sfrapp.interfaces.UserRepository
+import com.levento.sfrapp.models.Response
 import com.levento.sfrapp.models.User
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class UserRepositoryImpl : iUserRepository {
+@Singleton
+class UserRepositoryImpl @Inject constructor(
+    private val auth: FirebaseAuth,
+    private val db: FirebaseFirestore
+) : UserRepository {
 
-    val db = Firebase.firestore
+    override val isUserAuthenticated = auth.currentUser != null
 
-    private val auth = FirebaseAuth.getInstance()
+    override suspend fun loginUser(email: String, password: String) = flow {
 
-    override suspend fun loginUser(email:String,password:String): AuthResult? {
-        return try{
-            val data = auth.signInWithEmailAndPassword(email,password).await()
-            return data
-        }catch (e : Exception){
-            return null
+        //TODO Ändra tillbaks till medskickade parametrar
+        val testEmail = "user1@mail.com"
+        val testPassword = "password"
+
+        Log.d(TAG, "The user is trying to log in")
+        try {
+            emit(Response.Loading)
+            auth.signInWithEmailAndPassword(testEmail,testPassword).await()
+            emit(Response.Success(true))
+        } catch (e: Exception) {
+            emit(Response.Error(message = "Något gick fel"))
+            Log.d("myDebug", "Kunde inte logga in" + e.message)
         }
     }
 
+
     override suspend fun checkLogin(): Boolean {
-        return auth.currentUser != null
+        return if (auth.currentUser!= null) {
+            Log.d(TAG, "The user is logged in")
+            true
+        } else {
+            Log.d(TAG, "The user is logged out")
+            false
+        }
     }
 
     override suspend fun getUserData(): User? {
@@ -46,11 +67,8 @@ class UserRepositoryImpl : iUserRepository {
     }
 
     override suspend fun logOut() {
+        Log.d(TAG, "The user logge out")
         auth.signOut()
-    }
-
-    fun setUser() {
-
     }
 
 }

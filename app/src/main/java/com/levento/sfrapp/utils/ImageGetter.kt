@@ -70,4 +70,5 @@ class ImageGetter(
     // Function to get screenWidth used above
     fun getScreenWidth() =
         Resources.getSystem().displayMetrics.widthPixels
+
 }

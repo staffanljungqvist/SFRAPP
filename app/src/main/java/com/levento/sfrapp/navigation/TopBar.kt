@@ -24,11 +24,16 @@ fun TopBar(
 ) {
 
     val pageName = when (currentRoute) {
-        "home" -> "Hem"
-        "benefits" -> "Förmåner"
-        "profile" -> "Din sida"
-        "info" -> "Information"
-        else -> "Placeholder"
+        "home" -> "HEM"
+        "benefits" -> "FÖRMÅNER"
+        "profile" -> "DIN SIDA"
+        "info" -> "INFORMATION"
+        "articleDetail" -> "ARTIKEL"
+        "benefitDetail" -> "FÖRMÅN"
+        "aboutUs" -> "OM OSS"
+        "contact" -> "KONTAKTA OSS"
+        "gdpr" -> "GDPR"
+        else -> ""
     }
 
     Box(
@@ -41,7 +46,7 @@ fun TopBar(
             backgroundColor = dark,
         )
 
-        Box(contentAlignment = Alignment.Center, modifier = Modifier.offset(y = 20.dp)) {
+/*        Box(contentAlignment = Alignment.Center, modifier = Modifier.offset(y = 20.dp)) {
             Icon(
                 painter = painterResource(id = R.drawable.bee),
                 contentDescription = null,
@@ -52,9 +57,9 @@ fun TopBar(
             Image(
                 painter = painterResource(id = R.drawable.bee),
                 contentDescription = null,
-                modifier = Modifier.size(45.dp)
+                modifier = Modifier.size(50.dp)
             )
-        }
+        }*/
     }
 }
 

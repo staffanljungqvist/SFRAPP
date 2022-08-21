@@ -1,53 +1,35 @@
 package com.levento.sfrapp
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.levento.sfrapp.ui.theme.SFRAPPTheme
+import androidx.constraintlayout.widget.ConstraintLayout
 
 class CardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            SFRAPPTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    val onClose = { finish() }
-                    CardScreen(onClose)
-                }
-            }
+        setContentView(R.layout.activity_card)
+
+        val layout = findViewById<ConstraintLayout>(R.id.cardLayout)
+        val orgNumberText = findViewById<TextView>(R.id.text_orgnumber)
+        val companyNameText = findViewById<TextView>(R.id.text_company_name)
+        val expirationDateText = findViewById<TextView>(R.id.text_valid_date)
+
+        val extras = intent.extras
+
+        if (extras != null) {
+            val orgNumber = extras.getString("orgNumber")
+            val companyName = extras.getString("companyName")
+            val expirationDate = extras.getString("expirationDate")
+
+            orgNumberText.text = orgNumber ?: "Missing org Number"
+            companyNameText.text = companyName ?: "Missing company name"
+            expirationDateText.text = expirationDate ?: "Missing expiration date"
+        }
+
+        layout.setOnClickListener {
+            finish()
         }
     }
-}
-
-@Composable
-fun CardScreen(onClose: () -> Unit) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Column(
-            verticalArrangement = Arrangement.SpaceEvenly,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxHeight()
-        ) {
-            Text("Förmånskort")
-            Text("Stäng", modifier = Modifier.clickable(onClick = onClose))
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun CardScreenPreview() {
-    CardScreen({})
 }

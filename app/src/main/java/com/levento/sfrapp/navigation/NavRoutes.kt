@@ -1,5 +1,7 @@
 package com.levento.sfrapp.navigation
 
+import androidx.navigation.NavHostController
+
 sealed class NavRoutes(val route: String) {
     object Home : NavRoutes("home")
     object Benefits : NavRoutes("benefits")
@@ -8,5 +10,7 @@ sealed class NavRoutes(val route: String) {
     object Info : NavRoutes("info")
     object BenefitDetail : NavRoutes("benefitDetail")
     object ArticleDetail : NavRoutes("articleDetail")
-    object Login: NavRoutes("login")
+    object AboutUs: NavRoutes("aboutUs")
+    object Contact: NavRoutes("contact")
+    object Gdpr: NavRoutes("gdpr")
 }

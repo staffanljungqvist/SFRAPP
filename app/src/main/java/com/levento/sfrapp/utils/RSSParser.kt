@@ -1,7 +1,8 @@
 package com.levento.sfrapp.utils
 
-import TAG
+
 import android.util.Log
+import com.levento.sfrapp.TAG
 import com.levento.sfrapp.models.Article
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException

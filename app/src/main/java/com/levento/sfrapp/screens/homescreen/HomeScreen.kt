@@ -26,8 +26,6 @@ fun HomeScreen(
     onArticleClick: (Article) -> Unit,
 ) {
     SFRAPPTheme() {
-
-
         Column(
             modifier = Modifier
                 //    .background(backgroundColor)
@@ -59,6 +57,7 @@ fun HomeScreen(
     }
 }
 
+/*
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
@@ -71,4 +70,4 @@ fun HomeScreenPreview() {
                 onBenefitClick = {})
         }
     }
-}
+}*/

@@ -18,16 +18,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.imageLoader
+import coil.request.CachePolicy
+import coil.request.ImageRequest
 import coil.request.ImageResult
+import coil.transform.CircleCropTransformation
 import com.levento.sfrapp.models.Benefit
 import com.levento.sfrapp.data.PlaceHolders
 import com.levento.sfrapp.ui.theme.SFRAPPTheme
 import com.levento.sfrapp.ui.theme.red
+import com.levento.sfrapp.R
 import dev.chrisbanes.snapper.ExperimentalSnapperApi
 import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 
@@ -105,14 +111,38 @@ fun BenefitCard(
                     .padding(top = 10.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                val context = LocalContext.current
+                val placeholderImage = R.drawable.placeholder_img
+                val imageUrl = benefit.imageURL
+
+                val imageRequest = ImageRequest.Builder(context)
+                    .data(imageUrl)
+                    .memoryCacheKey(imageUrl)
+                    .diskCacheKey(imageUrl)
+
+                    .setHeader("Cache-Control", "public", )
+                    .error(placeholderImage)
+                    .fallback(placeholderImage)
+                    .diskCachePolicy(CachePolicy.ENABLED)
+                    .memoryCachePolicy(CachePolicy.ENABLED)
+                    .build()
+
+/*                AsyncImage(
+                    model = imageRequest,
+                    modifier = Modifier.size(64.dp),
+                    contentDescription = null,
+                    imageLoader = context.imageLoader
+                )*/
+
                 AsyncImage(
-                    model = benefit.image?.drawable,
+                    model = imageRequest,
                     contentDescription = "",
                     modifier = Modifier
                         .height(64.dp)
                         .width(140.dp)
                         .clip(shapes.small),
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Crop,
+                    imageLoader = context.imageLoader
                 )
 
                 //Text för testsyfte. byt it med dealtext1 och dealtext2 när firebase är ifyllt.

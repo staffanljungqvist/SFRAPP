@@ -18,11 +18,11 @@ object PlaceHolders {
         address = "HETCH AB, Redaregatan 48",
         phone = "0708 1234567",
         contactPerson = "Kalle Johansson",
-        validThru = "2023-03-12"
+        expirationDate = "2023-03-12"
     )
 
 
-    val newsList = listOf<Article>(
+    val newsList2 = listOf<Article>(
         Article(
             id = "1",
             title = "Det här är en placeholder nyhetstext",
@@ -74,11 +74,14 @@ object PlaceHolders {
     )
 
     val categories = listOf(
-        BenefitCategory(title = "Aktuellt"),
         BenefitCategory(title = "Administration"),
         BenefitCategory(title = "Fordon"),
+        BenefitCategory(title = "Aktuellt"),
         BenefitCategory(title = "Elektronik")
     )
+
+
+
 
     var id = 1
         get() {

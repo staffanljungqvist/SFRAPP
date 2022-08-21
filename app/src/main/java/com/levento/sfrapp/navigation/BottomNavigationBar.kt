@@ -13,18 +13,25 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.levento.sfrapp.CardActivity
-import com.levento.sfrapp.data.NavBarItems
+import com.levento.sfrapp.R
+import com.levento.sfrapp.navigation.NavBarItems.BarItemsLoggedIn
 import com.levento.sfrapp.ui.theme.BottomBackgroundCOlor
 import com.levento.sfrapp.ui.theme.selectedColor
 import com.levento.sfrapp.ui.theme.unselectedColor
 
+
 @Composable
-fun BottomNavigationBar(navController: NavController, loggedIn: Boolean) {
+fun BottomNavigationBar(
+    navController: NavController,
+    loggedIn: Boolean,
+    onCardLoggedIn: () -> Unit
+) {
 
     CustomBottomNavigation(
         backgroundColor = BottomBackgroundCOlor,
@@ -33,9 +40,8 @@ fun BottomNavigationBar(navController: NavController, loggedIn: Boolean) {
     ) {
         val backStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = backStackEntry?.destination?.route
-        val context = LocalContext.current
 
-        val barItems = if (loggedIn) NavBarItems.BarItemsLoggedIn else NavBarItems.BarItemsLoggedOut
+        val barItems = BarItemsLoggedIn
 
         barItems.forEach { navItem ->
 
@@ -46,7 +52,16 @@ fun BottomNavigationBar(navController: NavController, loggedIn: Boolean) {
                 selected = selected,
                 onClick = {
                     if (cardItem) {
-                        context.startActivity(Intent(context, CardActivity::class.java))
+                        if (loggedIn) {
+                            onCardLoggedIn()
+                        } else {
+                            navController.navigate(NavRoutes.Profile.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                            }
+                        }
                     } else {
                         navController.navigate(navItem.route) {
                             popUpTo(navController.graph.findStartDestination().id) {
@@ -66,7 +81,10 @@ fun BottomNavigationBar(navController: NavController, loggedIn: Boolean) {
                         )
                     } else {
                         Icon(
-                            painter = painterResource(id = navItem.image),
+                            painter = painterResource(
+                                id = if (navItem.route == "profile" && !loggedIn) R.drawable.ic_baseline_login_24
+                                else navItem.image
+                            ),
                             contentDescription = "card icon",
                             tint = if (selected) selectedColor else unselectedColor,
                             modifier = Modifier
@@ -78,7 +96,7 @@ fun BottomNavigationBar(navController: NavController, loggedIn: Boolean) {
                 label = if (!cardItem) {
                     {
                         Text(
-                            text = navItem.title,
+                            text = if (navItem.route == "profile" && !loggedIn) "LOGGA IN" else navItem.title,
                             color = if (selected) selectedColor else unselectedColor,
                             fontSize = 12.sp,
                             modifier = Modifier
@@ -97,6 +115,6 @@ fun BottomNavigationBar(navController: NavController, loggedIn: Boolean) {
 @Preview
 @Composable
 fun BottomNavigationBarPreview() {
-    BottomNavigationBar(navController = rememberNavController(), true)
+    BottomNavigationBar(navController = rememberNavController(), true, onCardLoggedIn = {})
 }
 

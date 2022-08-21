@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
+    id 'dagger.hilt.android.plugin'
 }
 
 
@@ -11,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "com.levento.sfrapp"
-        minSdk 21
+        minSdk 26
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -34,12 +35,17 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+
+
+
+
+
     }
     buildFeatures {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerExtensionVersion = "1.3.0-rc02"
     }
     packagingOptions {
         resources {
@@ -57,7 +63,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
     implementation 'androidx.activity:activity-compose:1.3.1'
     implementation 'androidx.appcompat:appcompat:1.4.2'
-    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
@@ -67,14 +73,14 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
 
     //navigation
-    implementation "androidx.navigation:navigation-compose:2.5.0"
+    implementation "androidx.navigation:navigation-compose:2.5.1"
 
     // Integration with ViewModels
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1'
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1'
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
 
     // Integration with observables
-    implementation 'androidx.compose.runtime:runtime-livedata:1.1.1'
+    implementation 'androidx.compose.runtime:runtime-livedata:1.2.0'
 
     //Coil
     implementation("io.coil-kt:coil-compose:2.1.0")
@@ -83,19 +89,16 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:30.1.0')
 
     /*Firestore for online database*/
-    implementation 'com.google.firebase:firebase-firestore:24.1.2'
+    implementation 'com.google.firebase:firebase-firestore:24.2.2'
     implementation 'com.google.firebase:firebase-firestore-ktx'
 
     //Firebase Authorization
-    implementation 'com.google.firebase:firebase-auth:19.2.0'
+    implementation platform("com.google.firebase:firebase-bom:30.0")
+    implementation "com.google.firebase:firebase-auth-ktx"
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.0'
-
-    //Room Databse
-    implementation "androidx.room:room-runtime:2.4.2"
-    implementation "androidx.room:room-ktx:2.4.2"
-    annotationProcessor "androidx.room:room-compiler:2.4.2"
-    kapt "androidx.room:room-compiler:2.4.2"
+    //Play services
+    implementation platform('com.google.firebase:firebase-bom:30.3.1')
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
 
     //Used to change statusbar color
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"
@@ -103,6 +106,21 @@ dependencies {
     //Snapping content in rows and columns to the center of screen
     implementation "dev.chrisbanes.snapper:snapper:0.2.0"
 
-    //Image receiver used for images in parsed html
+    //Picasso Image receiver used for images in parsed html
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //Hilt
+    implementation("com.google.dagger:hilt-android:2.43.2")
+    kapt("com.google.dagger:hilt-android-compiler:2.43.2")
+
+    //Hilt navigation
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+
+    //Jsoup, för att parsa html text
+    implementation 'org.jsoup:jsoup:1.15.2'
+
+}
+
+kapt {
+    correctErrorTypes true
 }

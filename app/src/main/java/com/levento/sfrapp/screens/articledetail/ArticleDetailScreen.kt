@@ -1,7 +1,9 @@
 package com.levento.sfrapp.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -21,14 +23,18 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.levento.sfrapp.R
+import com.levento.sfrapp.TAG
 import com.levento.sfrapp.models.Article
 import com.levento.sfrapp.data.PlaceHolders
 import com.levento.sfrapp.screens.screencomponents.HTMLContentView
+import com.levento.sfrapp.screens.screencomponents.HTMLContentView2
 import com.levento.sfrapp.ui.theme.red
 
 
 @Composable
 fun ArticleDetailScreen(article: Article) {
+
+    Log.d(TAG, article.content.toString())
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -55,7 +61,7 @@ fun ArticleDetailScreen(article: Article) {
 
         ArticleHeadline(text = article.title ?: "Missing headline")
 
-        HTMLContentView(
+        HTMLContentView2(
             htmlText = article.content ?: "Missing content"
         )
     }
@@ -63,19 +69,20 @@ fun ArticleDetailScreen(article: Article) {
 
 @Composable
 fun ArticleHeadline(text: String) {
-    Text(
-        text = text,
-        style = MaterialTheme.typography.h1,
-        color = red,
-        maxLines = 3,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(20.dp)
-    )
+    Box(Modifier.padding(30.dp)) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.h1,
+            color = red,
+            maxLines = 3,
+            modifier = Modifier
+                .fillMaxSize()
+        )
+    }
 }
 
 @Preview
 @Composable
 fun ArticlePreview() {
-    ArticleDetailScreen(article = PlaceHolders.newsList[0])
+  //  ArticleDetailScreen(article = PlaceHolders.newsList[0])
 }
