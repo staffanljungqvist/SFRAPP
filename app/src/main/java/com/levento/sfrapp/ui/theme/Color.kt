@@ -17,6 +17,7 @@ val red = Color(0xFF622D38)
 val brown = Color(0xFF936517)
 val dark = Color(0xFF0D2C43)
 val lightGray = Color(0xFFF0F2F9)
+val mustard = Color(0xFFE49812)
 val screenBackgroundColor = lightGray
 val BottomBackgroundCOlor = dark
 val selectedColor = blueLight

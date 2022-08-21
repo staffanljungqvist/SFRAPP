@@ -8,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -41,6 +42,8 @@ import com.levento.sfrapp.screens.info.GdprScreen
 import com.levento.sfrapp.screens.profile.LoginScreen
 import com.levento.sfrapp.screens.profile.ProfileScreen
 import com.levento.sfrapp.ui.theme.SFRAPPTheme
+import com.levento.sfrapp.ui.theme.blue
+import com.levento.sfrapp.ui.theme.dark
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -141,6 +144,10 @@ fun MainScreen(viewModel: MainViewModel) {
                     // .padding(bottom = 30.dp),
                     contentScale = ContentScale.FillHeight
                 )
+                
+/*                Box(Modifier.fillMaxSize().background(dark.copy(alpha = 0.05f))) {
+                    
+                }*/
 
                 NavigationHost(
                     navController = navController,

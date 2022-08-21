@@ -61,7 +61,7 @@ fun ArticleDetailScreen(article: Article) {
 
         ArticleHeadline(text = article.title ?: "Missing headline")
 
-        HTMLContentView2(
+        HTMLContentView(
             htmlText = article.content ?: "Missing content"
         )
     }

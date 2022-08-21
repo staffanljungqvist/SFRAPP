@@ -26,6 +26,7 @@ import coil.request.ImageRequest
 import com.levento.sfrapp.R
 import com.levento.sfrapp.TAG
 import com.levento.sfrapp.models.Benefit
+import com.levento.sfrapp.screens.screencomponents.HTMLContentView
 import com.levento.sfrapp.screens.screencomponents.HTMLContentView2
 import com.levento.sfrapp.ui.theme.blue
 import kotlinx.coroutines.launch

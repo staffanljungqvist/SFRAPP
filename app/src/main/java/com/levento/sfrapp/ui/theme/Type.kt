@@ -12,14 +12,10 @@ import com.levento.sfrapp.R
 
 private val fontFamilyMontsserat = FontFamily(
     listOf(
-        Font(
-            resId = R.font.montserat_regular,
-            weight = FontWeight.Normal
-        ),
-        Font(
-            resId = R.font.montserat_bold,
-            weight = FontWeight.Bold
-        )
+        Font(resId = R.font.montserrat_regular),
+        Font(R.font.montserrat_medium, FontWeight.W500),
+        Font(R.font.montserrat_semibold, FontWeight.W600),
+        Font(R.font.montserrat_bold, FontWeight.Bold)
     )
 )
 
@@ -40,10 +36,10 @@ val typography = Typography(
 
     h1 = TextStyle(
         fontFamily = fontFamilyMontsserat,
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = FontWeight.W600,
         fontSize = 18.sp,
         letterSpacing = (1.25).sp,
-          color = brown
+        color = brown
     ),
     h2 = TextStyle(
         fontFamily = fontFamilySourceSansPro,
@@ -62,6 +58,11 @@ val typography = Typography(
         fontWeight = FontWeight.Bold,
         fontSize = 13.sp,
         letterSpacing = (0.5).sp
+    ),
+    h6 = TextStyle(
+        fontFamily = fontFamilyMontsserat,
+        fontWeight = FontWeight.W600,
+        fontSize = 20.sp
     ),
     body1 = TextStyle(
         fontFamily = fontFamilySourceSansPro,
@@ -85,6 +86,12 @@ val typography = Typography(
         fontFamily = fontFamilySourceSansPro,
         fontSize = 12.sp,
         letterSpacing = 0.sp
+    ),
+
+    subtitle2 = TextStyle(
+        fontFamily = fontFamilyMontsserat,
+        fontWeight = FontWeight.W500,
+        fontSize = 14.sp
     ),
 
     defaultFontFamily = fontFamilySourceSansPro

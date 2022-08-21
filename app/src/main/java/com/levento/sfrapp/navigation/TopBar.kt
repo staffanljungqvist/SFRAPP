@@ -1,11 +1,9 @@
 package com.levento.sfrapp.navigation
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
@@ -24,14 +22,14 @@ fun TopBar(
 ) {
 
     val pageName = when (currentRoute) {
-        "home" -> "HEM"
-        "benefits" -> "FÖRMÅNER"
-        "profile" -> "DIN SIDA"
-        "info" -> "INFORMATION"
-        "articleDetail" -> "ARTIKEL"
-        "benefitDetail" -> "FÖRMÅN"
-        "aboutUs" -> "OM OSS"
-        "contact" -> "KONTAKTA OSS"
+        "home" -> "Hem"
+        "benefits" -> "Förmåner"
+        "profile" -> "Min Sida"
+        "info" -> "Information"
+        "articleDetail" -> "Artikel"
+        "benefitDetail" -> "Förmån"
+        "aboutUs" -> "Om Oss"
+        "contact" -> "Kontakta Oss"
         "gdpr" -> "GDPR"
         else -> ""
     }
@@ -41,7 +39,10 @@ fun TopBar(
     ) {
         TopAppBar(
             title = {
-                Text(pageName, color = Color.White)
+                Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp), horizontalAlignment = Alignment.End) {
+                    Text(pageName, color = Color.White, style = MaterialTheme.typography.subtitle2)
+
+                }
             },
             backgroundColor = dark,
         )
@@ -67,5 +68,5 @@ fun TopBar(
 @Preview(showBackground = true, showSystemUi = true, backgroundColor = 0xFF622D38)
 @Composable
 fun TopBarPreview() {
-    TopBar("Hem")
+    TopBar("home")
 }

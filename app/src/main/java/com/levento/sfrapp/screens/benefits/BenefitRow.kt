@@ -34,6 +34,7 @@ import com.levento.sfrapp.data.PlaceHolders
 import com.levento.sfrapp.ui.theme.SFRAPPTheme
 import com.levento.sfrapp.ui.theme.red
 import com.levento.sfrapp.R
+import com.levento.sfrapp.screens.Header
 import dev.chrisbanes.snapper.ExperimentalSnapperApi
 import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 
@@ -51,11 +52,9 @@ fun BenefitRow(
 
     Column() {
 
-        Text(
-            text = header.uppercase(),
-            style = MaterialTheme.typography.h1,
-            modifier = Modifier.padding(start = 16.dp, bottom = 16.dp),
-        )
+        Header(header)
+
+        Spacer(modifier = Modifier.padding(bottom = 16.dp))
 
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(32.dp),
@@ -87,11 +86,11 @@ fun BenefitCard(
     onClick: (Benefit) -> Unit
 ) {
     Card(
-        elevation = 5.dp,
+        elevation = 3.dp,
         shape = RoundedCornerShape(15.dp),
         modifier = Modifier
-            .height(150.dp)
-            .width(200.dp),
+            .height(180.dp)
+            .width(220.dp),
         onClick = { onClick(benefit) }
     ) {
         Box(
@@ -138,15 +137,15 @@ fun BenefitCard(
                     model = imageRequest,
                     contentDescription = "",
                     modifier = Modifier
-                        .height(64.dp)
-                        .width(140.dp)
-                        .clip(shapes.small),
+                        .height(74.dp)
+                        .width(160.dp)
+                        .clip(shapes.medium),
                     contentScale = ContentScale.Crop,
                     imageLoader = context.imageLoader
                 )
 
                 //Text för testsyfte. byt it med dealtext1 och dealtext2 när firebase är ifyllt.
-                Offer("Erbjudande", "50% rabatt")
+                Offer(benefit.dealtext1, "50% rabatt")
             }
         }
     }
@@ -158,7 +157,7 @@ fun Offer(offerTitle: String, offerSubTitle: String) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 16.dp),
+            .padding(top = 16.dp, start = 8.dp, end = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {

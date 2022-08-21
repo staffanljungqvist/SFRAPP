@@ -9,5 +9,6 @@ data class Article(
     var date: String? = "Datum Saknas",
     var imageUrl: String? = null,
     var content: String? = "Text Saknas",
-    var link: String? = "Länk Saknas"
+    var link: String? = "Länk Saknas",
+    var tags: List<String>? = listOf<String>("Vi möter", "Nyheter")
 )
