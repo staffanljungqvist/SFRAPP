@@ -6,15 +6,9 @@ import coil.ImageLoaderFactory
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import coil.request.CachePolicy
-import coil.util.CoilUtils
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.levento.sfrapp.data.repository.BenefitsRepositoryImpl
-import com.levento.sfrapp.data.repository.NewsRepositoryImpl
-import com.levento.sfrapp.data.repository.UserRepositoryImpl
 import dagger.hilt.android.HiltAndroidApp
-import okhttp3.OkHttpClient
 
+const val TAG = "mydebug"
 
 @HiltAndroidApp
 class SFRAPP : Application(), ImageLoaderFactory {
