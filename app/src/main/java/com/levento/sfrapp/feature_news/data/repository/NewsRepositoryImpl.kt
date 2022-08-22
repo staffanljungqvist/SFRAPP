@@ -43,6 +43,7 @@ class NewsRepositoryImpl @Inject constructor() : NewsRepository {
                 val con = connection as HttpURLConnection
                 val data = BufferedInputStream(con.inputStream)
                 articles = RSSParser(data as InputStream).parseRSS()
+                Log.d(TAG, "So far so good")
             } catch (e: Exception) {
                 Log.d(TAG, "Kunde inte skapa connection, " + e.message.toString())
             }

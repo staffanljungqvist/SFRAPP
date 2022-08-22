@@ -1,8 +1,10 @@
 package com.levento.sfrapp.screens.screencomponents
 
+import android.R
 import android.content.Context
 import android.graphics.Color
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
@@ -12,16 +14,17 @@ import android.widget.TextView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.levento.sfrapp.TAG
 import com.levento.sfrapp.common.utils.HtmlImageParser
 import com.levento.sfrapp.common.utils.WebParser
+
+
 
 
 @Composable
@@ -50,8 +53,12 @@ fun HTMLContentView(htmlText: String, context: Context = LocalContext.current) {
 @Composable
 fun HTMLContentView2(htmlText: String, context: Context = LocalContext.current) {
 
-    val htmlContent by remember { mutableStateOf(WebParser().parseHtml(htmlText).html()) }
+    val htmlContent by remember { mutableStateOf(WebParser().parseHtml(htmlText)) }
 
+
+    //   val head1 = "<head><style>@font-face {font-family: 'montserrat_bold';src: url('res/font/montserrat_bold.otf');}body {font-family: 'montserrat_bold';}</style></head>";
+    // val text = "<html>" + head1 + "<body style=\"font-family: montserrat_bold\">" + htmlContent + "</body></html>";
+    Log.d(TAG, htmlContent)
     Box(
         Modifier
             .fillMaxHeight()
@@ -74,9 +81,52 @@ fun HTMLContentView2(htmlText: String, context: Context = LocalContext.current) 
                 setBackgroundColor(Color.argb(0, 0, 0, 0))
             }
         },
-        update = {
-            it.loadData("<font color=\"" + "666666" + "\">" + htmlContent + "</font>", "text/html", "UTF-8")
-        })
+            update = {
+                it.loadDataWithBaseURL(
+                    "file:///android_res/",
+                    //"<font color=\"" + "666666" + "\">" + htmlContent + "</font>",
+                    htmlContent,
+                    "text/html", "UTF-8", ""
+                )
+            })
     }
 }
 
+@Composable
+fun HTMLContentView3(url: String?, context: Context = LocalContext.current) {
+
+    var isLoading by remember { mutableStateOf(true) }
+
+    Box(
+        Modifier
+            .fillMaxHeight()
+            .padding(start = 20.dp, end = 20.dp, bottom = 150.dp, top = 20.dp)
+    ) {
+        AndroidView(factory = {
+            WebView(context).apply {
+                settings.javaScriptEnabled = true
+                visibility = View.INVISIBLE
+                webViewClient = object : WebViewClient() {
+                    override fun onPageFinished(view: WebView?, url: String?) {
+                        view?.loadUrl(
+                            "javascript:(function() { " +
+                                    "document.getElementsByClassName('elementor-section-wrap')[0].style.display='none'; " +
+                                    "document.querySelectorAll('[data-elementor-type=footer]')[0].style.display='none'; " +
+                                    "document.getElementsByClassName('elementor-section elementor-top-section elementor-element elementor-element-9ba81c8 elementor-section-boxed elementor-section-height-default elementor-section-height-default')[0].style.display='none'; " +
+                                    "})()"
+                        )
+                        isLoading = false
+                        visibility = View.VISIBLE
+                    }
+                }
+                loadUrl(url ?: "")
+            }
+        },
+            update = {
+                //    it.loadUrl(url)
+            })
+        if (isLoading) {
+                Text("Laddar")
+        }
+    }
+}

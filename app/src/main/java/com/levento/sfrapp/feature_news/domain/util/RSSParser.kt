@@ -64,8 +64,10 @@ class RSSParser(val inputStream: InputStream) {
             Log.d("SFRDebug", "Parse färdig, antal artiklar: ${articles.size}")
             return articles
         } catch (e: XmlPullParserException) {
+            Log.d(TAG, "xmlpUllParserException: " + e.message.toString())
             e.printStackTrace()
         } catch (e: IOException) {
+            Log.d(TAG, "IOException: " + e.message.toString())
             e.printStackTrace()
         }
         return arrayListOf<Article>()

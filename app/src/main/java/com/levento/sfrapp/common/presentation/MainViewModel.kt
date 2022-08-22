@@ -51,9 +51,6 @@ class MainViewModel @Inject constructor(
     private val _currentArticle = mutableStateOf(Article())
     val currentArticle = _currentArticle
 
-    private val _exclusiveBenefits = mutableStateOf(listOf<Benefit>())
-    val exclusiveBenefits = _exclusiveBenefits
-
     private val _populatedCategories = mutableStateOf(listOf<BenefitCategory>())
     val populatedCategories = _populatedCategories
 
@@ -136,7 +133,7 @@ class MainViewModel @Inject constructor(
     }
 
 
-    fun createCategoryList(benefits: List<Benefit>): MutableList<BenefitCategory> {
+    private fun createCategoryList(benefits: List<Benefit>): MutableList<BenefitCategory> {
 
         val categoryNames = mutableSetOf<String>()
         val categoryList = mutableListOf<BenefitCategory>()
