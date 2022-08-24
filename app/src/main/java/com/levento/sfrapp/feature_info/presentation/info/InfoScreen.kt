@@ -8,8 +8,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -46,7 +48,12 @@ fun InfoItem(icon: Int, text: String, onClick: (String) -> Unit, route: String) 
             contentDescription = text // decorative element
         )
         Spacer(modifier = Modifier.width(16.dp))
-        Text(text = text, style = MaterialTheme.typography.body1)
+        Text(
+            text = text,
+            style = MaterialTheme.typography.h5,
+           // fontWeight = FontWeight.Bold,
+            color = Color.DarkGray
+        )
     }
 }
 

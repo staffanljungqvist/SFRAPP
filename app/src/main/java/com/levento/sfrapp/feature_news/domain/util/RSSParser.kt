@@ -47,10 +47,21 @@ class RSSParser(val inputStream: InputStream) {
                                 article.date = tagValue
                             } else if (tagName.equals("media:thumbnail", ignoreCase = true)) {
                                 article.imageUrl = parser.getAttributeValue(0)
+                                //    Log.d(TAG, "YOUTUBE URL = " + parser.getAttributeValue(0))
                             } else if (tagName.equals("link", ignoreCase = true)) {
                                 article.link = tagValue
                             } else if (tagName.equals("content:encoded", ignoreCase = true)) {
                                 article.content = tagValue
+                            } else if (tagName.equals("category", ignoreCase = true)) {
+                                tagValue?.let {
+                                    article.tags.add(it)
+                                }
+                            } else if (tagName.equals("media:player", ignoreCase = true)) {
+                                try {
+                                    article.videoUrl = tagValue
+                                } catch (e: Exception) {
+                                    Log.d(TAG, "Hittade inte " + e.message.toString())
+                                }
                             }
                         }
                         if (tagName.equals("item", ignoreCase = true)) {

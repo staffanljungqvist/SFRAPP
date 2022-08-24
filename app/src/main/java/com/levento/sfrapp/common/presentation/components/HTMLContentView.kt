@@ -6,35 +6,26 @@ import android.graphics.Color
 import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.View
-import android.webkit.WebChromeClient
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import android.widget.TextView
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.levento.sfrapp.TAG
 import com.levento.sfrapp.common.utils.HtmlImageParser
+import com.levento.sfrapp.common.utils.VideoHtmlParser
 import com.levento.sfrapp.common.utils.WebParser
-
-
 
 
 @Composable
 fun HTMLContentView(htmlText: String, context: Context = LocalContext.current) {
 
-    Box(
-        Modifier
-            .padding(start = 20.dp, end = 20.dp, bottom = 150.dp, top = 20.dp)
-            .fillMaxHeight()
-    ) {
+    Column {
 
         AndroidView(
             factory = { context ->
@@ -45,10 +36,17 @@ fun HTMLContentView(htmlText: String, context: Context = LocalContext.current) {
             },
             update = {
                 HtmlImageParser(context).displayHtml(htmlText, it)
-            }
+            },
+            modifier = Modifier.padding(
+                start = 20.dp,
+                end = 20.dp,
+                bottom = 150.dp,
+                top = 20.dp
+            )
         )
     }
 }
+
 
 @Composable
 fun HTMLContentView2(htmlText: String, context: Context = LocalContext.current) {
@@ -126,7 +124,7 @@ fun HTMLContentView3(url: String?, context: Context = LocalContext.current) {
                 //    it.loadUrl(url)
             })
         if (isLoading) {
-                Text("Laddar")
+            Text("Laddar")
         }
     }
 }

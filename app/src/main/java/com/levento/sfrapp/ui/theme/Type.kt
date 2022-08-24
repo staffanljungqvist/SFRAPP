@@ -39,12 +39,12 @@ val typography = Typography(
         fontWeight = FontWeight.W600,
         fontSize = 18.sp,
         letterSpacing = (1.25).sp,
-        color = brown
+        color = red
     ),
     h2 = TextStyle(
         fontFamily = fontFamilySourceSansPro,
-        fontWeight = FontWeight.Normal,
-        fontSize = 14.sp,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 16.sp,
         letterSpacing = (0).sp
     ),
     h3 = TextStyle(
@@ -54,10 +54,18 @@ val typography = Typography(
         letterSpacing = 0.sp
     ),
     h4 = TextStyle(
-        fontFamily = fontFamilyMontsserat,
-        fontWeight = FontWeight.Bold,
-        fontSize = 13.sp,
-        letterSpacing = (0.5).sp
+        fontFamily = fontFamilySourceSansPro,
+        fontWeight = FontWeight.Normal,
+        fontSize = 18.sp,
+        color = gray,
+       // letterSpacing = (1).sp
+    ),
+    h5 = TextStyle(
+        fontFamily = fontFamilySourceSansPro,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        color = Color.DarkGray,
+        // letterSpacing = (1).sp
     ),
     h6 = TextStyle(
         fontFamily = fontFamilyMontsserat,
@@ -93,6 +101,8 @@ val typography = Typography(
         fontWeight = FontWeight.W500,
         fontSize = 14.sp
     ),
+
+
 
     defaultFontFamily = fontFamilySourceSansPro
 )

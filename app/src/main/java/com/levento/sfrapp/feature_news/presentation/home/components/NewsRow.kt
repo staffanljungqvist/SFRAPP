@@ -26,6 +26,7 @@ import coil.compose.AsyncImage
 import com.levento.sfrapp.R
 import com.levento.sfrapp.common.PlaceHolders
 import com.levento.sfrapp.feature_news.domain.model.Article
+import com.levento.sfrapp.screens.Header
 import com.levento.sfrapp.ui.theme.*
 import dev.chrisbanes.snapper.ExperimentalSnapperApi
 import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
@@ -39,9 +40,15 @@ fun NewsRow(articles: List<Article>, onArticleClick: (Article) -> Unit) {
 
     val lazyListState: LazyListState = rememberLazyListState()
 
+    Spacer(modifier = Modifier.height(28.dp))
+
+    Header("Nyheter", modifier = Modifier.padding(horizontal = 16.dp))
+
+    Spacer(modifier = Modifier.height(8.dp))
+
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(32.dp),
-        //  contentPadding = PaddingValues(horizontal = 16.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp),
         state = lazyListState,
         flingBehavior = rememberSnapperFlingBehavior(lazyListState)
     ) {
@@ -62,9 +69,8 @@ fun NewsRow(articles: List<Article>, onArticleClick: (Article) -> Unit) {
 fun FeaturedPost(
     article: Article,
     onClick: (Article) -> Unit,
-    modifier: Modifier = Modifier.padding(16.dp)
 ) {
-    Card(elevation = 3.dp, modifier = modifier) {
+    Card(elevation = 3.dp) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -77,13 +83,14 @@ fun FeaturedPost(
                 modifier = Modifier
                     .heightIn(min = 200.dp)
                     .fillMaxWidth(),
-            //    placeholder = painterResource(id = R.drawable.placeholder_img),
+                placeholder = painterResource(id = R.drawable.placeholder_img),
             )
             Spacer(Modifier.height(16.dp))
 
             val padding = Modifier.padding(horizontal = 16.dp)
             Box(modifier = padding.height(60.dp)) {
                 NewsTitle(title = article.title ?: "")
+            //    Text(text = article.title ?: "", modifier = padding, style = MaterialTheme.typography.h6)
             }
 
 
@@ -100,6 +107,7 @@ fun NewsTitle(title: String, modifier: Modifier = Modifier) {
     val textStyleBody1 = MaterialTheme.typography.h6
     var textStyle by remember { mutableStateOf(textStyleBody1) }
     var readyToDraw by remember { mutableStateOf(false) }
+
     Text(
         text = title,
         style = textStyle,
@@ -150,92 +158,10 @@ private fun PostMetadata(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun NewsCard(article: Article, onArticleClick: (Article) -> Unit) {
-    Card(
-        elevation = 1.dp,
-        //   shape = RoundedCornerShape(15.dp),
-        modifier = Modifier
-            .fillMaxWidth(),
-        onClick = { onArticleClick(article) }
-    ) {
-
-        Box(
-            modifier = Modifier
-                .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(
-                         //   dark.copy(alpha = 0.7f),
-                            blue.copy(alpha = 0.1f),
-                            Color.White,
-                            Color.White,
-                            Color.White
-                        )
-                    )
-                )
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-
-            ) {
-
-
-
-                ArticleThumbnail(article.imageUrl, modifier = Modifier
-                    .padding(start = 30.dp, end = 30.dp, top = 20.dp)
-                    .clip(Shapes.small)
-                )
-
-                Text(
-                    text = article.title ?: "Missing headline",
-                    style = MaterialTheme.typography.h4,
-                    color = red,
-                    maxLines = 3,
-                    modifier = Modifier
-                        .height(60.dp)
-                        .padding(start = 30.dp, end = 30.dp, top = 10.dp, bottom = 4.dp)
-                    //      .weight(1.0f)
-                )
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 30.dp, bottom = 10.dp)
-                ) {
-                    Text(
-                        text = "17-05-2022",
-                       // style = MaterialTheme.typography.caption,
-                        color = gray800
-                    )
-
-                    Text(
-                        "Kategori",
-                        modifier = Modifier.padding(start = 30.dp, end = 30.dp, bottom = 4.dp)
-                    )
-                }
-
-            }
-        }
-    }
-}
-
-@Composable
-fun ArticleThumbnail(image: String?, modifier: Modifier = Modifier) {
-    AsyncImage(
-        model = image,
-        contentDescription = null,
-        modifier = modifier
-            .fillMaxSize(),
-        contentScale = ContentScale.FillWidth,
-        placeholder = painterResource(id = R.drawable.placeholder_img),
-        error = painterResource(id = R.drawable.placeholder_img)
-    )
-}
-
 @Preview
 @Composable
 fun ArticlePreview() {
-    FeaturedPost(article = PlaceHolders.newsList[0], onClick = {})
+    SFRAPPTheme() {
+        NewsRow(articles = Article.placeholderList, onArticleClick = {})
+    }
 }

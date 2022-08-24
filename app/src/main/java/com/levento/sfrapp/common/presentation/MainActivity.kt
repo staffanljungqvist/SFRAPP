@@ -126,7 +126,7 @@ fun MainScreen(viewModel: MainViewModel) {
 
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { TopBar(currentRoute) },
+        //topBar = { TopBar(currentRoute) },
         content = {
             Box(contentAlignment = Alignment.BottomCenter, modifier = Modifier.padding(it)) {
                 Image(
@@ -137,10 +137,6 @@ fun MainScreen(viewModel: MainViewModel) {
                     // .padding(bottom = 30.dp),
                     contentScale = ContentScale.FillHeight
                 )
-                
-/*                Box(Modifier.fillMaxSize().background(dark.copy(alpha = 0.05f))) {
-                    
-                }*/
 
                 NavigationHost(
                     navController = navController,

@@ -27,8 +27,4 @@ class HtmlImageParser(val context: Context) {
         // setting the text after formatting html and downloading and setting images
         textView.text = styledText
     }
-
-
-
-
 }

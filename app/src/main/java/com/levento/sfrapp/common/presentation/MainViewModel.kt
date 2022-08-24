@@ -32,10 +32,6 @@ class MainViewModel @Inject constructor(
     private val userRepository: UserRepository
         ) : ViewModel() {
 
-  //  private val imageLoadHelper = HtmlImageParser(application)
-
-    private val _signInResponse = mutableStateOf<AuthResponse<Boolean>>(AuthResponse.Loading)
-
     private val _user = mutableStateOf(User())
     val user = _user
 
@@ -45,7 +41,7 @@ class MainViewModel @Inject constructor(
     private val _isLoggedIn = mutableStateOf(false)
     val isLoggedIn = _isLoggedIn
 
-    private val _articles = mutableStateOf(listOf<Article>())
+    private val _articles = mutableStateOf(Article.placeholderList)
     val articles = _articles
 
     private val _currentArticle = mutableStateOf(Article())
@@ -119,6 +115,10 @@ class MainViewModel @Inject constructor(
 
         if (benefitResponse.data != null) {
 
+            val content = benefitResponse.data!![0].content
+
+            Log.d(TAG, content.toString())
+
             //Går igenom alla förmåners tillhörande kategorier och skapar en ny lista av typen BenefitCategory för varje unikt kategorinamn som dyker upp.
             val categories = createCategoryList(benefitResponse.data!!)
 
@@ -134,7 +134,6 @@ class MainViewModel @Inject constructor(
 
 
     private fun createCategoryList(benefits: List<Benefit>): MutableList<BenefitCategory> {
-
         val categoryNames = mutableSetOf<String>()
         val categoryList = mutableListOf<BenefitCategory>()
 

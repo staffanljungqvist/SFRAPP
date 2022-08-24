@@ -35,10 +35,13 @@ fun HomeScreen(
                 )
             }*/
 
+    //    Spacer(modifier = Modifier.height(28.dp))
+
+      //  Header(header, modifier = Modifier.padding(horizontal = 16.dp))
+
+
+
         LazyColumn() {
-            item {
-                Header("Nyheter")
-            }
             item {
                 NewsRow(newsArticles, onArticleClick)
             }
@@ -50,7 +53,7 @@ fun HomeScreen(
                 )
             }
             item {
-                Spacer(Modifier.height(500.dp))
+                Spacer(Modifier.height(50.dp))
             }
         }
     }
@@ -59,16 +62,15 @@ fun HomeScreen(
 
 @Composable
 fun Header(
-    text: String,
+    title: String,
     modifier: Modifier = Modifier
 ) {
 
     Text(
-        text = text.uppercase(),
+        text = title.uppercase(),
         style = MaterialTheme.typography.h1,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
     )
 }
 

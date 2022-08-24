@@ -17,7 +17,7 @@ fun BenefitsScreen(
 ) {
     SFRAPPTheme() {
 
-        LazyColumn(contentPadding = PaddingValues(bottom = 100.dp)) {
+        LazyColumn(contentPadding = PaddingValues(bottom = 50.dp)) {
             items(categoryList) { category ->
                 if (category.benefits.isNotEmpty()) {
                     BenefitRow(

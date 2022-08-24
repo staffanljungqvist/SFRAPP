@@ -19,6 +19,7 @@ class WebParser {
                 }
             }
         }
+
         return withStyle(doc.html())
     }
 

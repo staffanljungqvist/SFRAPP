@@ -2,10 +2,7 @@ package com.levento.sfrapp.screens
 
 import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
@@ -22,6 +19,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.levento.sfrapp.R
 import com.levento.sfrapp.TAG
+import com.levento.sfrapp.common.presentation.components.VideoView
 import com.levento.sfrapp.feature_news.domain.model.Article
 import com.levento.sfrapp.screens.screencomponents.HTMLContentView
 import com.levento.sfrapp.screens.screencomponents.HTMLContentView2
@@ -30,7 +28,7 @@ import com.levento.sfrapp.ui.theme.red
 
 
 @Composable
-fun ArticleDetailScreen4(article: Article) {
+fun ArticleDetailScreen(article: Article) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -38,11 +36,8 @@ fun ArticleDetailScreen4(article: Article) {
             .verticalScroll(rememberScrollState())
     ) {
 
-        if (article.imageUrl == null) {
-            Image(
-                painter = painterResource(id = R.drawable.placeholder_img),
-                contentDescription = null
-            )
+        if (article.videoUrl != null) {
+            VideoView(videoURL = article.videoUrl!!)
         } else {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
@@ -57,15 +52,15 @@ fun ArticleDetailScreen4(article: Article) {
 
         ArticleHeadline(text = article.title ?: "Missing headline")
 
-        HTMLContentView(
-            htmlText = article.content ?: "Missing content"
-        )
+
+
+        HTMLContentView(htmlText = article.content ?: "Missing content")
     }
 }
 
 @Composable
 fun ArticleHeadline(text: String) {
-    Box(Modifier.padding(30.dp)) {
+    Box(Modifier.padding(20.dp)) {
         Text(
             text = text,
             style = MaterialTheme.typography.h1,
@@ -78,7 +73,7 @@ fun ArticleHeadline(text: String) {
 }
 
 @Composable
-fun ArticleDetailScreen2(article: Article) {
+fun ArticleDetailScreen7(article: Article) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -103,15 +98,13 @@ fun ArticleDetailScreen2(article: Article) {
             )
         }
         ArticleHeadline(text = article.title ?: "Missing headline")
-
         HTMLContentView2(htmlText = article.content ?: "Missing content")
     }
 }
 
 
-
 @Composable
-fun ArticleDetailScreen(article: Article) {
+fun ArticleDetailScreen6(article: Article) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -120,7 +113,6 @@ fun ArticleDetailScreen(article: Article) {
         HTMLContentView3(article.link)
     }
 }
-
 
 
 @Preview

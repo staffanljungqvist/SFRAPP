@@ -51,13 +51,15 @@ fun BenefitRow(
 
     Column() {
 
-        Header(header)
+        Spacer(modifier = Modifier.height(28.dp))
 
-        Spacer(modifier = Modifier.padding(bottom = 16.dp))
+        Header(header, modifier = Modifier.padding(horizontal = 16.dp))
+
+        Spacer(modifier = Modifier.height(8.dp))
 
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(32.dp),
-            contentPadding = PaddingValues(start = 40.dp, end = 40.dp),
+            contentPadding = PaddingValues(start = 16.dp, end = 60.dp),
             state = lazyListState,
             flingBehavior = rememberSnapperFlingBehavior(lazyListState),
         ) {
@@ -70,9 +72,6 @@ fun BenefitRow(
                 )
             }
         }
-
-        Spacer(modifier = Modifier.padding(bottom = 28.dp))
-
     }
 }
 
@@ -89,7 +88,7 @@ fun BenefitCard(
         shape = RoundedCornerShape(15.dp),
         modifier = Modifier
             .height(180.dp)
-            .width(220.dp),
+            .width(240.dp),
         onClick = { onClick(benefit) }
     ) {
         Box(
@@ -118,7 +117,7 @@ fun BenefitCard(
                     .memoryCacheKey(imageUrl)
                     .diskCacheKey(imageUrl)
 
-                    .setHeader("Cache-Control", "public", )
+                    .setHeader("Cache-Control", "public")
                     .error(placeholderImage)
                     .fallback(placeholderImage)
                     .diskCachePolicy(CachePolicy.ENABLED)
@@ -144,7 +143,7 @@ fun BenefitCard(
                 )
 
                 //Text för testsyfte. byt it med dealtext1 och dealtext2 när firebase är ifyllt.
-                Offer(benefit.dealtext1, "50% rabatt")
+                Offer(benefit.dealtext1, benefit.dealtext2)
             }
         }
     }
@@ -167,17 +166,11 @@ fun Offer(offerTitle: String, offerSubTitle: String) {
         )
         Text(
             text = offerSubTitle.uppercase(),
-            fontWeight = FontWeight.SemiBold,
+            style = MaterialTheme.typography.h3,
             color = red,
             textAlign = TextAlign.Center
         )
     }
-}
-
-@Preview
-@Composable
-fun OfferPreview() {
-    BenefitCard(benefit = Benefit.placeholder, onClick = {})
 }
 
 
