@@ -53,10 +53,7 @@ fun HTMLContentView2(htmlText: String, context: Context = LocalContext.current) 
 
     val htmlContent by remember { mutableStateOf(WebParser().parseHtml(htmlText)) }
 
-
-    //   val head1 = "<head><style>@font-face {font-family: 'montserrat_bold';src: url('res/font/montserrat_bold.otf');}body {font-family: 'montserrat_bold';}</style></head>";
-    // val text = "<html>" + head1 + "<body style=\"font-family: montserrat_bold\">" + htmlContent + "</body></html>";
-    Log.d(TAG, htmlContent)
+   Log.d(TAG, htmlContent)
     Box(
         Modifier
             .fillMaxHeight()

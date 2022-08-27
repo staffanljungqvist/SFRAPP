@@ -92,7 +92,7 @@ fun BottomNavigationBar(
                 label = if (!cardItem) {
                     {
                         Text(
-                            text = if (navItem.route == "profile" && !loggedIn) "LOGGA IN" else navItem.title,
+                            text = if (navItem.route == "profile" && !loggedIn) "Logga in" else navItem.title,
                             color = if (selected) selectedColor else unselectedColor,
                             fontSize = 12.sp,
                             modifier = Modifier

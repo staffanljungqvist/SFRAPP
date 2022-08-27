@@ -1,5 +1,6 @@
 package com.levento.sfrapp.common.utils
 
+import androidx.compose.foundation.lazy.rememberLazyListState
 import com.levento.sfrapp.feature_benefits.domain.model.Benefit
 import com.levento.sfrapp.feature_benefits.domain.model.BenefitCategory
 
@@ -28,4 +29,3 @@ fun MutableList<BenefitCategory>.populate(benefitList: List<Benefit>) {
         }
     }
 }
-
