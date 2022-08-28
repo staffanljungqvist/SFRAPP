@@ -70,7 +70,7 @@ val typography = Typography(
     h6 = TextStyle(
         fontFamily = fontFamilyMontsserat,
         fontWeight = FontWeight.W600,
-        fontSize = 20.sp
+        fontSize = 16.sp
     ),
     body1 = TextStyle(
         fontFamily = fontFamilySourceSansPro,

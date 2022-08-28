@@ -3,11 +3,11 @@ package com.levento.sfrapp.di
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.levento.sfrapp.data.repository.BenefitsRepositoryImpl
-import com.levento.sfrapp.feature_benefits.domain.repository.BenefitsRepository
-import com.levento.sfrapp.feature_news.data.repository.NewsRepositoryImpl
-import com.levento.sfrapp.feature_news.domain.repository.NewsRepository
-import com.levento.sfrapp.feature_user.data.repository.UserRepositoryImpl
-import com.levento.sfrapp.feature_user.domain.repository.UserRepository
+import com.levento.sfrapp.domain.repository.BenefitsRepository
+import com.levento.sfrapp.data.repository.NewsRepositoryImpl
+import com.levento.sfrapp.domain.repository.NewsRepository
+import com.levento.sfrapp.data.repository.UserRepositoryImpl
+import com.levento.sfrapp.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

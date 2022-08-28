@@ -1,8 +1,8 @@
 package com.levento.sfrapp
 
-import com.levento.sfrapp.common.PlaceHolders
-import com.levento.sfrapp.feature_news.data.repository.NewsRepositoryImpl
-import com.levento.sfrapp.feature_benefits.domain.model.BenefitCategory
+import com.levento.sfrapp.domain.util.PlaceHolders
+import com.levento.sfrapp.data.repository.NewsRepositoryImpl
+import com.levento.sfrapp.domain.model.BenefitCategory
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.junit.Test
