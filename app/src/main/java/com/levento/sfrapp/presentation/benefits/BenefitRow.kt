@@ -50,7 +50,7 @@ fun BenefitRow(
 
     Column(modifier = Modifier.padding(bottom = 10.dp, top = 24.dp)) {
 
-    //    Spacer(modifier = Modifier.height(28.dp))
+        //    Spacer(modifier = Modifier.height(28.dp))
 
         Header(header, modifier = modifier.padding(horizontal = 16.dp))
 
@@ -67,7 +67,6 @@ fun BenefitRow(
                 BenefitCard(
                     benefit = benefit,
                     onClick = onBenefitClick,
-                    categoryImage = categoryImage
                 )
             }
         }
@@ -79,7 +78,6 @@ fun BenefitRow(
 @Composable
 fun BenefitCard(
     benefit: Benefit,
-    categoryImage: ImageResult? = null,
     onClick: (Benefit) -> Unit
 ) {
     Card(
@@ -90,86 +88,64 @@ fun BenefitCard(
             .width(240.dp),
         onClick = { onClick(benefit) }
     ) {
-        Box(
-            modifier = Modifier.background(Color.White)
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .background(Color.White),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-/*            AsyncImage(
-                model = categoryImage?.drawable,
+            val context = LocalContext.current
+            val placeholderImage = R.drawable.fordon_kategori
+            val imageUrl = benefit.imageURL
+
+            val imageRequest = ImageRequest.Builder(context)
+                .data(imageUrl)
+                .memoryCacheKey(imageUrl)
+                .diskCacheKey(imageUrl)
+                .setHeader("Cache-Control", "public")
+                .error(placeholderImage)
+                .fallback(placeholderImage)
+                .diskCachePolicy(CachePolicy.ENABLED)
+                .memoryCachePolicy(CachePolicy.ENABLED)
+                .build()
+
+            Spacer(Modifier.height(16.dp))
+
+            AsyncImage(
+                model = imageRequest,
                 contentDescription = "",
                 modifier = Modifier
+                    .padding(bottom = 8.dp)
                     .height(74.dp)
-                    .width(250.dp),
-                contentScale = ContentScale.Fit
-            )*/
+                    .width(170.dp)
+                    .clip(shapes.medium),
+                contentScale = ContentScale.Crop,
+                imageLoader = context.imageLoader
+            )
             Column(
                 modifier = Modifier
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally
+
+                    .padding(horizontal = 8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                val context = LocalContext.current
-                val placeholderImage = R.drawable.placeholder_img
-                val imageUrl = benefit.imageURL
-
-                val imageRequest = ImageRequest.Builder(context)
-                    .data(imageUrl)
-                    .memoryCacheKey(imageUrl)
-                    .diskCacheKey(imageUrl)
-
-                    .setHeader("Cache-Control", "public")
-                    .error(placeholderImage)
-                    .fallback(placeholderImage)
-                    .diskCachePolicy(CachePolicy.ENABLED)
-                    .memoryCachePolicy(CachePolicy.ENABLED)
-                    .build()
-
-/*                AsyncImage(
-                    model = imageRequest,
-                    modifier = Modifier.size(64.dp),
-                    contentDescription = null,
-                    imageLoader = context.imageLoader
-                )*/
-
-                AsyncImage(
-                    model = imageRequest,
-                    contentDescription = "",
-                    modifier = Modifier
-                        .height(74.dp)
-                        .width(160.dp)
-                        .clip(shapes.medium),
-                    contentScale = ContentScale.Crop,
-                    imageLoader = context.imageLoader
+                Text(
+                    text = benefit.dealtext1.uppercase(),
+                    style = MaterialTheme.typography.h2,
+                    textAlign = TextAlign.Center
                 )
-
-                //Text för testsyfte. byt it med dealtext1 och dealtext2 när firebase är ifyllt.
-                Offer(benefit.dealtext1, benefit.dealtext2)
+                Text(
+                    text = benefit.dealtext2.uppercase(),
+                    style = MaterialTheme.typography.h3,
+                    color = red,
+                    textAlign = TextAlign.Center
+                )
             }
         }
     }
 }
 
-@Composable
-fun Offer(offerTitle: String, offerSubTitle: String) {
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 16.dp, start = 8.dp, end = 8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        Text(
-            text = offerTitle.uppercase(),
-            style = MaterialTheme.typography.h2,
-            textAlign = TextAlign.Center
-        )
-        Text(
-            text = offerSubTitle.uppercase(),
-            style = MaterialTheme.typography.h3,
-            color = red,
-            textAlign = TextAlign.Center
-        )
-    }
-}
 
 
 @Preview(showBackground = true)
