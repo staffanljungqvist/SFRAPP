@@ -25,11 +25,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    application: Application,
     private val newsRepository: NewsRepository,
     private val benefitsRepository: BenefitsRepository,
     private val userRepository: UserRepository
-        ) : ViewModel() {
+) : ViewModel() {
 
     private val _user = mutableStateOf(User())
     val user = _user
