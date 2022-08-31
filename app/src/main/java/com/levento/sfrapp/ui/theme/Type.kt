@@ -44,13 +44,13 @@ val typography = Typography(
     h2 = TextStyle(
         fontFamily = fontFamilySourceSansPro,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 16.sp,
+        fontSize = 15.sp,
         letterSpacing = (0).sp
     ),
     h3 = TextStyle(
         fontFamily = fontFamilySourceSansPro,
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp,
+        fontSize = 13.sp,
         letterSpacing = 0.sp
     ),
     h4 = TextStyle(
