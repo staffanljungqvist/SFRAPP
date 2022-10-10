@@ -14,42 +14,37 @@ import java.io.InputStream
 import java.net.HttpURLConnection
 import javax.inject.Inject
 
+const val RSS_URL = "https://smaforetagarna.se/nyheter/feed/"
+
 
 class NewsRepositoryImpl @Inject constructor() : NewsRepository {
 
-   // private val downloader = Downloader()
-    private val rssUrl = "https://smaforetagarna.se/nyheter/feed/"
-
     override suspend fun getNews(): NetworkResponse<List<Article>, Exception> {
 
-        val dataOrException = NetworkResponse<List<Article>, Exception>()
-        //TODO Implementera BenefitService och anropa getBenefits().
+        var dataOrException = NetworkResponse<List<Article>, Exception>()
         try {
-            dataOrException.data = downloadData()
+            dataOrException = downloadData()
         } catch (e: Exception) {
             dataOrException.e = e
         }
         return dataOrException
     }
 
-    suspend fun downloadData(): ArrayList<Article> {
+    private suspend fun downloadData(): NetworkResponse<List<Article>, Exception> {
 
-        var articles = arrayListOf<Article>()
+        lateinit var response: NetworkResponse<List<Article>, Exception>
 
         withContext(Dispatchers.IO) {
-            Log.d(TAG, "Försöker skapa connection")
-            try {
-                val connection: Any = Connector.connect(rssUrl)
+            response = try {
+                val connection: Any = Connector.connect(RSS_URL)
                 val con = connection as HttpURLConnection
                 val data = BufferedInputStream(con.inputStream)
-                articles = RSSParser(data as InputStream).parseRSS()
-                Log.d(TAG, "So far so good")
+                val articles = RSSParser(data as InputStream).parseRSS()
+                NetworkResponse(articles)
             } catch (e: Exception) {
-                Log.d(TAG, "Kunde inte skapa connection, " + e.message.toString())
+                NetworkResponse(e = e)
             }
-
         }
-        Log.d(TAG, "downloadData skickar med ${articles.size} stycken artiklar")
-        return articles
+        return response
     }
 }

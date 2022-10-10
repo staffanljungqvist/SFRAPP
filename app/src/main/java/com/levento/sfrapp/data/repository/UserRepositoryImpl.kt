@@ -1,10 +1,10 @@
 package com.levento.sfrapp.data.repository
 
-import android.util.Log
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
-import com.levento.sfrapp.TAG
 import com.levento.sfrapp.domain.repository.UserRepository
 import com.levento.sfrapp.domain.model.AuthResponse
 import com.levento.sfrapp.domain.model.User
@@ -23,52 +23,31 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun loginUser(email: String, password: String) = flow {
 
-        //TODO Ändra tillbaks till medskickade parametrar
-        val testEmail = "user1@mail.com"
-        val testPassword = "password"
-
-        Log.d(TAG, "The user is trying to log in")
         try {
             emit(AuthResponse.Loading)
-            auth.signInWithEmailAndPassword(testEmail,testPassword).await()
+            auth.signInWithEmailAndPassword(email,password).await()
             emit(AuthResponse.Success(true))
         } catch (e: Exception) {
-            emit(AuthResponse.Error(message = "Något gick fel"))
-            Log.d("myDebug", "Kunde inte logga in" + e.message)
+            emit(AuthResponse.Error(message = e.message ?: "Something went wrong"))
         }
     }
 
 
     override suspend fun checkLogin(): Boolean {
-        return if (auth.currentUser!= null) {
-            Log.d(TAG, "The user is logged in")
-            true
-        } else {
-            Log.d(TAG, "The user is logged out")
-            false
-        }
+        return auth.currentUser!= null
     }
 
-    //TODO använd network response
     override suspend fun getUserData(): User? {
         val userID = auth.currentUser?.uid ?: return null
         val response = db.collection("users").document(userID).get().await()
-        val user = response.toObject<User>()
-        return user
+        return response.toObject<User>()
     }
 
-    override suspend fun registerNewUser(email: String, password: String) {
-        auth.createUserWithEmailAndPassword(email!!, password!!).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                //     showUserMessage("Ny användare skapad")
-            }
-        }.addOnFailureListener { exception ->
-            //    showUserMessage(exception.message.toString())
-        }
+    override suspend fun registerNewUser(email: String, password: String): Task<AuthResult> {
+        return auth.createUserWithEmailAndPassword(email, password)
     }
 
     override suspend fun logOut() {
-        Log.d(TAG, "The user logge out")
         auth.signOut()
     }
 }

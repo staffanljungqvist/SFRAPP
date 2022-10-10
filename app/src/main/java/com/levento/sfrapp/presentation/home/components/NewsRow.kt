@@ -1,5 +1,6 @@
-package com.levento.sfrapp.screens.screencomponents
+package com.levento.sfrapp.presentation.home.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
@@ -28,7 +29,6 @@ import dev.chrisbanes.snapper.rememberSnapperFlingBehavior
 import java.util.*
 
 
-//Todo byt ut articles till lista med Artikelobjet
 @OptIn(ExperimentalSnapperApi::class)
 @Composable
 fun NewsRow(articles: List<Article>, onArticleClick: (Article) -> Unit) {
@@ -38,9 +38,7 @@ fun NewsRow(articles: List<Article>, onArticleClick: (Article) -> Unit) {
         val lazyListState: LazyListState = rememberLazyListState()
 
         Spacer(modifier = Modifier.height(24.dp))
-
         Header("Nyheter", modifier = Modifier.padding(horizontal = 16.dp))
-
         Spacer(modifier = Modifier.height(8.dp))
 
         LazyRow(
@@ -74,22 +72,26 @@ fun FeaturedPost(
             modifier = Modifier
                 .clickable { onClick(article) }
         ) {
-            AsyncImage(
-                model = article.imageUrl,
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                   // .heightIn(min = 200.dp)
-                    .fillMaxWidth()
-                    .weight(1f),
-                placeholder = painterResource(id = R.drawable.placeholder_img),
-            )
+            if (article.imageUrl != null) {
+                AsyncImage(
+                    model = article.imageUrl,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    placeholder = painterResource(id = R.drawable.placeholder_img),
+                )
+            } else {
+                Image(
+                    painter = painterResource(id = R.drawable.placeholder_img),
+                    contentDescription = null)
+            }
             Spacer(Modifier.height(16.dp))
 
             val padding = Modifier.padding(horizontal = 16.dp)
             Box(modifier = padding.height(60.dp)) {
                 NewsTitle(title = article.title ?: "")
-            //    Text(text = article.title ?: "", modifier = padding, style = MaterialTheme.typography.h6)
             }
 
             Spacer(Modifier.height(8.dp))
@@ -100,7 +102,7 @@ fun FeaturedPost(
 }
 
 @Composable
-fun NewsTitle(title: String, modifier: Modifier = Modifier) {
+fun NewsTitle(title: String) {
 
     val textStyleBody1 = MaterialTheme.typography.h6
     var textStyle by remember { mutableStateOf(textStyleBody1) }
@@ -133,12 +135,11 @@ private fun PostMetadata(
     val text = buildAnnotatedString {
         append(article.date?.dropLast(14) ?: "")
         append(divider)
-     //   append(stringResource(R.string.read_time, post.metadata.readTimeMinutes))
         append(divider)
         val tagStyle = MaterialTheme.typography.overline.toSpanStyle().copy(
             background = MaterialTheme.colors.secondary.copy(alpha = 0.1f)
         )
-        article.tags?.forEachIndexed { index, tag ->
+        article.tags.forEachIndexed { index, tag ->
             if (index != 0) {
                 append(tagDivider)
             }
